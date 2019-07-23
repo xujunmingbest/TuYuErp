@@ -27,13 +27,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     global.cpp \
     MysqlOperate/mysqloperate.cpp \
-    MysqlOperate/mysqloperate.cpp
+    MysqlOperate/mysqloperate.cpp \
+    MysqlTableConfig/MysqlTableConfig.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
     MysqlOperate/mysqloperate.h \
     MysqlOperate/mysqlstruct.h \
     MysqlOperate/mysqloperate.h \
-    MysqlOperate/mysqlstruct.h
+    MysqlOperate/mysqlstruct.h \
+    MysqlTableConfig/MysqlTableConfig.h
 
 FORMS    += mainwindow.ui
