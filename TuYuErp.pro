@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,8 +24,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    global.cpp \
+    MysqlOperate/mysqloperate.cpp \
+    MysqlOperate/mysqloperate.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    global.h \
+    MysqlOperate/mysqloperate.h \
+    MysqlOperate/mysqlstruct.h \
+    MysqlOperate/mysqloperate.h \
+    MysqlOperate/mysqlstruct.h
 
 FORMS    += mainwindow.ui
