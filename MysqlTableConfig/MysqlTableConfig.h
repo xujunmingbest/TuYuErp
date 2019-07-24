@@ -15,7 +15,6 @@ private:
     QSet<QString> get_table_columns(QString TableName);
   private:
     QMap<QString,QSet<QString>> TableConfigdata;
-
 };
 
 

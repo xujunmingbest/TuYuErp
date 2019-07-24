@@ -11,6 +11,8 @@
 #include <QJsonObject>
 #include <QVector>
 
+#define PAGESIZE 30
+
 class MysqlOperate
 {
 private:
@@ -25,25 +27,12 @@ private:
 
 public:
   bool Insert(QString tableName,QMap<QString,QString> &data);
-  bool Find(QString tableName,QMap<QString,QString> &refer,QVector<QMap<QString,QString>> &data);
-  bool Delete(QString tableName,QMap<QString,QString> &refer);
-  bool Update(QString tableName,QMap<QString,QString> &refer ,QMap<QString,QString> &data);
-
-
-  bool find_user(QString name,QString password);
-  bool find_auth(QString role,QJsonObject &jo);
-
-
-  bool add_factory_contract(S_factory_contract &data);
-  bool add_factory_product(S_factory_product &data);
-  bool find_factory_contract(QString contract_id,S_factory_contract &data);
-  bool find_factory_product(QString contract_id,std::vector<S_factory_product> &data);
-
-
-  bool add_mianliao_ruku(S_mianliao_ruku &data);
-  bool add_mianliao_chuku(S_mianliao_chuku &data);
-  bool find_mianliao_ruku(QString ruku_id,S_mianliao_ruku &data);
-  bool find_mianliao_chuku(QString ruku_id,std::vector<S_mianliao_chuku> &data);
+  bool Find(QString tableName,QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions,QVector<QMap<QString,QString>> &data,int page=1);
+  bool Delete(QString tableName,QMap<QString,QString> &conditions);
+  bool Update(QString tableName,QMap<QString,QString> &conditions ,QMap<QString,QString> &data);
+  int Count(QString tableName,QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions);
+private:
+  bool ConditionHasData(QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions);
 
 };
 

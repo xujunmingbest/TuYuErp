@@ -1,4 +1,6 @@
 #include "global.h"
+CUser *CUser::local_instance = nullptr;
+
 
 CUser *CUser::getInstance()
 {
@@ -18,3 +20,42 @@ QString CUser::get_auth(QString MoKuaiName){
     }
     return "";
 }
+
+bool CUser::LoadAuth() //加载权限
+{
+   MysqlOperate *mysqlInstance = MysqlOperate::getInstance();
+   QMap<QString,QString> conditions={{"role",m_role}};
+   QVector<QMap<QString,QString>> data;
+   mysqlInstance->Find("user_auth",&conditions,nullptr,data);
+   if( data.size() == 0) return false;
+   QJsonObject jo = QstringToJson(data[0].value("auth"));
+   qDebug() << data[0].value("auth") << m_name;
+   QJsonObject::Iterator it;
+   m_authmap.clear();
+   for(it=jo.begin();it!=jo.end();it++)
+   {
+       m_authmap.insert(it.key(),it.value().toString());
+   }
+   qDebug() << SS("用户名") << m_name;
+   qDebug() << SS("用户角色") << m_role;
+   qDebug() << SS("用户权限") << m_authmap;
+   return true;
+}
+
+QJsonObject QstringToJson(QString jsonString)
+{
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toStdString().data());
+    if(jsonDocument.isNull())
+    {
+        QMessageBox::about(NULL, SS("错误提示"), SS("jsonDocument is null"));
+    }
+    QJsonObject jsonObject = jsonDocument.object();
+    return jsonObject;
+}
+
+QString JsonToQstring(QJsonObject jsonObject)
+{
+    return QString(QJsonDocument(jsonObject).toJson());
+}
+
+

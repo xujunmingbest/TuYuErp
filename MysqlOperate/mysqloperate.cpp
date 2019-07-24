@@ -40,13 +40,20 @@ bool MysqlOperate::MysqlOpen(){
 }
 
 bool MysqlOperate::Insert(QString tableName,QMap<QString,QString> &data){
-    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)) return false;
-
+    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)){
+        QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
+        return false;
+    }
+    QSet<QString> columns =  MysqlTableConfig::getInstance()->get_table_columns(tableName);
     QString sq1 = "insert into ";
     sq1 += tableName + " (";
     QString sq2 = " values( ";
     QMap<QString, QString>::const_iterator it;
     for (it = data.constBegin(); it != data.constEnd(); ++it) {
+        if( columns.find(it.key()) == columns.constEnd()) {
+             QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+             return false;
+        }
         sq1 += it.key() + ",";
         sq2 += "'" + it.value() + "'," ;
     }
@@ -67,9 +74,66 @@ bool MysqlOperate::Insert(QString tableName,QMap<QString,QString> &data){
     }
 }
 
-bool MysqlOperate::Find(QString tableName,QMap<QString,QString> &refer,QVector<QMap<QString,QString>> &data){
+bool MysqlOperate::ConditionHasData(QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions){
+    if(conditions != nullptr){
+        if( conditions->size() > 0) return true;
+    }
+    if( likeconditions != nullptr){
+        if( likeconditions->size() > 0) return true;
+    }
+    return false;
+}
+int MysqlOperate::Count(QString tableName,QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions){
+    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)){
+        QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
+        return false;
+    }
+    QSet<QString> columns =  MysqlTableConfig::getInstance()->get_table_columns(tableName);
+    QString sq1 = "select count(*) from " + tableName;
+    if( ConditionHasData(conditions,likeconditions) ){
+        sq1 += " where ";
+    }
+    if(conditions !=nullptr){
+        QMap<QString, QString>::const_iterator it;
+        for (it = conditions->constBegin(); it != conditions->constEnd(); ++it) {
+            if( columns.find(it.key()) == columns.constEnd()) {
+                QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                return false;
+           }
+            sq1 += it.key() + "= '" + it.value() + "' and ";
+        }
+    }
+    if(  likeconditions != nullptr){
+        QMap<QString, QString>::const_iterator it;
+        for (it = likeconditions->constBegin(); it != likeconditions->constEnd(); ++it) {
+            if( columns.find(it.key()) == columns.constEnd()) {
+                QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                return false;
+           }
+            sq1 += it.key() + " like '%" + it.value() + "%' and ";
+        }
+    }
+    if(  ConditionHasData(conditions,likeconditions) ){
+         sq1 = sq1.left(sq1.length()-5);
+    }
+    qDebug() << sq1;
+    QSqlQuery query(sq1);
+    if( query.isActive()){
+        while(query.next()){
+            return query.value(0).toInt();
+        }
+    }
+    return 0;
+}
+
+
+
+bool MysqlOperate::Find(QString tableName,QMap<QString,QString> *conditions,QMap<QString,QString> *likeconditions,QVector<QMap<QString,QString>> &data,int page){
     data.clear();
-    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)) return false;
+    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)){
+        QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
+        return false;
+    }
     QSet<QString> columns =  MysqlTableConfig::getInstance()->get_table_columns(tableName);
     QString sq1 = "select ";
     QSet<QString>::const_iterator itset;
@@ -78,14 +142,36 @@ bool MysqlOperate::Find(QString tableName,QMap<QString,QString> &refer,QVector<Q
     }
     sq1[sq1.length()-1] = ' ';
     sq1 += "from " + tableName ;
-    if(refer.size() > 0){
+    if( ConditionHasData(conditions,likeconditions) ){
         sq1 += " where ";
+    }
+
+    if(conditions !=nullptr){
         QMap<QString, QString>::const_iterator it;
-        for (it = refer.constBegin(); it != refer.constEnd(); ++it) {
+        for (it = conditions->constBegin(); it != conditions->constEnd(); ++it) {
+            if( columns.find(it.key()) == columns.constEnd()) {
+                QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                return false;
+           }
             sq1 += it.key() + "= '" + it.value() + "' and ";
         }
-        sq1 = sq1.left(sq1.length()-5);
     }
+    if(  likeconditions != nullptr){
+        QMap<QString, QString>::const_iterator it;
+        for (it = likeconditions->constBegin(); it != likeconditions->constEnd(); ++it) {
+            if( columns.find(it.key()) == columns.constEnd()) {
+                QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                return false;
+           }
+            sq1 += it.key() + " like '%" + it.value() + "%' and ";
+        }
+    }
+    if( ConditionHasData(conditions,likeconditions) ){
+         sq1 = sq1.left(sq1.length()-5);
+    }
+
+    sq1 +=QString(" limit %1 offset %2").arg(PAGESIZE).arg(PAGESIZE*(page-1));
+
 
     qDebug() << sq1;
     QSqlQuery query(sq1);
@@ -106,13 +192,21 @@ bool MysqlOperate::Find(QString tableName,QMap<QString,QString> &refer,QVector<Q
 
 
 bool MysqlOperate::Delete(QString tableName,QMap<QString,QString> &refer){
-   if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)) return false;
+   if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)){
+       QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
+       return false;
+   }
+   QSet<QString> columns =  MysqlTableConfig::getInstance()->get_table_columns(tableName);
    QString sq = "delete from ";
    sq += tableName;
    if(refer.size() > 0){
         sq += " where ";
         QMap<QString, QString>::const_iterator it;
         for (it = refer.constBegin(); it != refer.constEnd(); ++it) {
+            if( columns.find(it.key()) == columns.constEnd()) {
+                 QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                 return false;
+            }
             sq += it.key() + "= '" + it.value() + "' and ";
         }
         sq = sq.left(sq.length()-5);
@@ -130,12 +224,20 @@ bool MysqlOperate::Delete(QString tableName,QMap<QString,QString> &refer){
    }
 }
 bool MysqlOperate::Update(QString tableName,QMap<QString,QString> &refer ,QMap<QString,QString> &data){
-    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)) return false;
+    if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)) {
+        QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
+        return false;
+    }
+    QSet<QString> columns =  MysqlTableConfig::getInstance()->get_table_columns(tableName);
     if(data.size() == 0 ) return false;
     QString sq = "update ";
     sq += tableName + " set ";
     QMap<QString, QString>::const_iterator it;
     for (it = data.constBegin(); it != data.constEnd(); ++it) {
+        if( columns.find(it.key()) == columns.constEnd()) {
+             QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+             return false;
+        }
         sq += it.key() + "= '" + it.value() + "',";
     }
     sq[sq.length()-1] = ' ';
@@ -145,6 +247,10 @@ bool MysqlOperate::Update(QString tableName,QMap<QString,QString> &refer ,QMap<Q
          sq += " where ";
          QMap<QString, QString>::const_iterator it;
          for (it = refer.constBegin(); it != refer.constEnd(); ++it) {
+             if( columns.find(it.key()) == columns.constEnd()) {
+                  QMessageBox::about(NULL, SS("错误提示"), SS("表字段有误:")+tableName);
+                  return false;
+             }
              sq += it.key() + "= '" + it.value() + "' and ";
          }
          sq = sq.left(sq.length()-5);
@@ -163,177 +269,3 @@ bool MysqlOperate::Update(QString tableName,QMap<QString,QString> &refer ,QMap<Q
     }
    return true;
 }
-
-
-
-
-
-
-bool MysqlOperate::find_user(QString name,QString password){
-
-    QString sq=QStringLiteral("select * from user where username = '%1' and password = '%2'").arg(name).arg(password);
-    qDebug() << sq;
-    QSqlQuery query(sq);
-    if( query.isActive()){
-        while(query.next()){
-            return true;
-        }
-    }
-    return false;
-
-}
-#include <QJsonObject>
-
-bool MysqlOperate::find_auth(QString role,QJsonObject &jo){
-    QString sq=QStringLiteral("select auth from auth where role = '%1'").arg(role);
-    qDebug() << sq;
-    QSqlQuery query(sq);
-    if( query.isActive()){
-        while(query.next()){
-            jo = query.value(0).toJsonObject();
-            return true;
-        }
-    }
-    return false;
-
-}
-
-
-bool MysqlOperate::MysqlOperate::add_factory_contract(S_factory_contract &data){
-    QString sq=QStringLiteral("insert into factory_contract ("
-                              "contract_address,contract_id,jia_account,jia_address,"
-                              "jia_agency,jia_bank,jia_bank,jia_faren,"
-                              "jia_fax,jia_name,jia_telephone,jiesuan_daxie,"
-                              "jiesuan_xiaoxie,yi_account,yi_address,yi_agency,"
-                              "yi_bank,yi_date,yi_faren,yi_fax,"
-                              "yi_name,yi_telephone ) values("
-                              "'%1','%2','%3','%4','%5','%6','%7','%8','%9','%10',"
-                              "'%11','%12','%13','%14','%15','%16','%17','%18','%19','%20',"
-                              "'%21','%22')")
-            .arg(data.contract_address).arg(data.contract_id).arg(data.jia_account).arg(data.jia_address)
-            .arg(data.jia_agency).arg(data.jia_bank).arg(data.jia_date).arg(data.jia_faren)
-            .arg(data.jia_fax).arg(data.jia_name).arg(data.jia_telephone).arg(data.jiesuan_daxie)
-            .arg(data.jiesuan_xiaoxie).arg(data.yi_account).arg(data.yi_address).arg(data.yi_agency)
-            .arg(data.yi_bank).arg(data.yi_date).arg(data.yi_faren).arg(data.yi_fax)
-            .arg(data.yi_name).arg(data.yi_telephone);
-    qDebug() << sq;
-    QSqlQuery query;
-    query.exec(sq);
-    if( query.isActive()){
-        QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("添加流水账成功"));
-        return true;
-    }else{
-        QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"), query.lastError().databaseText());
-        QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"), QString::fromLocal8Bit("添加流水账失败"));
-        return false;
-    }
-
-}
-bool MysqlOperate::MysqlOperate::add_factory_product(S_factory_product &data){
-    QString sq=QStringLiteral("insert into factory_product ("
-                              "color,comment,contract_id,danjia,"
-                              "danwei,jine,maogao,menfu,"
-                              "name,shuliang,spec ) values("
-                              "'%1','%2','%3','%4','%5','%6','%7','%8','%9','%10',"
-                              "'%11')")
-            .arg(data.color).arg(data.comment).arg(data.contract_id).arg(data.danjia)
-            .arg(data.danwei).arg(data.jine).arg(data.maogao).arg(data.menfu)
-            .arg(data.name).arg(data.shuliang).arg(data.spec);
-    qDebug() << sq;
-    QSqlQuery query;
-    query.exec(sq);
-    if( query.isActive()){
-        QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("添加流水账成功"));
-        return true;
-    }else{
-        QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"), query.lastError().databaseText());
-        QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"), QString::fromLocal8Bit("添加流水账失败"));
-        return false;
-    }
-
-}
-bool MysqlOperate::MysqlOperate::find_factory_contract(QString contract_id,S_factory_contract &data){
-    QString sq=QStringLiteral("select "
-                              "contract_address,contract_id,jia_account,jia_address,"
-                              "jia_agency,jia_bank,jia_bank,jia_faren,"
-                              "jia_fax,jia_name,jia_telephone,jiesuan_daxie,"
-                              "jiesuan_xiaoxie,yi_account,yi_address,yi_agency,"
-                              "yi_bank,yi_date,yi_faren,yi_fax,"
-                              "yi_name,yi_telephone from factory_contract where contract_id = '%1'").arg(contract_id);
-    qDebug() << sq;
-    QSqlQuery query(sq);
-    if( query.isActive()){
-        while(query.next()){
-            data.contract_address = query.value(0).toString();
-            data.contract_id = query.value(1).toString();
-            data.jia_account = query.value(2).toString();
-            data.jia_address = query.value(3).toString();
-            data.jia_agency = query.value(3).toString();
-
-            return true;
-        }
-    }
-    return false;
-
-}
-//bool MysqlOperate::MysqlOperate::find_factory_product(QString contract_id,std::vector<S_factory_product> &data);
-//
-//
-//bool MysqlOperate::MysqlOperate::add_mianliao_ruku(S_mianliao_ruku &data);
-//bool MysqlOperate::MysqlOperate::add_mianliao_chuku(S_mianliao_chuku &data);
-//bool MysqlOperate::MysqlOperate::find_mianliao_ruku(QString ruku_id,S_mianliao_ruku &data);
-//bool MysqlOperate::MysqlOperate::find_mianliao_chuku(QString ruku_id,std::vector<S_mianliao_chuku> &data);
-
-
-
-//bool MysqlOperate::UserLogin(QString name,QString password){
-//    QByteArray passwordmd5;
-//    passwordmd5 = QCryptographicHash::hash(password.toLatin1(),QCryptographicHash::Md5);
-//
-//    QString sq=QStringLiteral("select * from user where username = '%1' and password = '%2'").arg(name,QString(passwordmd5.toHex()));
-//    qDebug() << sq;
-//    QSqlQuery query(sq);
-//    if( query.isActive()){
-//        while(query.next()){
-//            g_Auth = query.value(1).toString();
-//            g_ChargeName = query.value(2).toString();
-//            g_Name = query.value(3).toString();
-//            qDebug() << g_Auth;
-//            qDebug() << g_ChargeName;
-//            qDebug() << g_Name;
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-//
-//#include <QJsonObject>
-//#include <QJsonDocument>
-//QJsonObject MysqlOperate::GetAuth(){
-//    QJsonObject jo;
-//            QString AuthType;
-//
-//    {
-//        QString sq=QStringLiteral("select module from user_authority where role = '%1'").arg(g_Auth);
-//        qDebug() << sq;
-//        QSqlQuery query(sq);
-//        if( query.isActive()){
-//            while(query.next()){
-//               QString jsonString = query.value(0).toString();
-//
-//                QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toStdString().data());
-//                if( jsonDocument.isNull() ){
-//                    qDebug()<< "===> please check the string "<< jsonString;
-//                }
-//                jo = jsonDocument.object();
-//               return jo;
-//
-//            }
-//        }else{
-//            QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"),QString::fromLocal8Bit("权限获取失败"));
-//            return jo;
-//        }
-//    }
-//
-//}
-
