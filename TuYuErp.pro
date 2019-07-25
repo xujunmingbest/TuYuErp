@@ -27,29 +27,33 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     global.cpp \
     MysqlOperate/mysqloperate.cpp \
-    MysqlOperate/mysqloperate.cpp \
     MysqlTableConfig/MysqlTableConfig.cpp \
     login.cpp \
-    login.cpp \
-    factory_contract/addfactorycontract.cpp \
-    factory_contract/lookfactorycontract.cpp \
-    factory_contract/findfactorycontract.cpp
+    FactoryContract/addfactorycontract.cpp \
+    FactoryContract/findfactorycontract.cpp \
+    FactoryContract/lookfactorycontract.cpp \
+    Mianliao/miaoliaoruku.cpp \
+    Mianliao/findmianliao.cpp \
+    Mianliao/mianliaojieyu.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
     MysqlOperate/mysqloperate.h \
     MysqlOperate/mysqlstruct.h \
-    MysqlOperate/mysqloperate.h \
-    MysqlOperate/mysqlstruct.h \
     MysqlTableConfig/MysqlTableConfig.h \
     login.h \
-    factory_contract/addfactorycontract.h \
-    factory_contract/lookfactorycontract.h \
-    factory_contract/findfactorycontract.h
+    FactoryContract/addfactorycontract.h \
+    FactoryContract/findfactorycontract.h \
+    FactoryContract/lookfactorycontract.h \
+    Mianliao/miaoliaoruku.h \
+    Mianliao/findmianliao.h \
+    Mianliao/mianliaojieyu.h
 
 FORMS    += mainwindow.ui \
     login.ui \
-    login.ui \
-    factory_contract/addfactorycontract.ui \
-    factory_contract/lookfactorycontract.ui \
-    factory_contract/findfactorycontract.ui
+    FactoryContract/addfactorycontract.ui \
+    FactoryContract/findfactorycontract.ui \
+    FactoryContract/lookfactorycontract.ui \
+    Mianliao/miaoliaoruku.ui \
+    Mianliao/findmianliao.ui \
+    Mianliao/mianliaojieyu.ui

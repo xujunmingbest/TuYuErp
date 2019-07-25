@@ -24,6 +24,10 @@ private:
 private slots:
     void ShowAddFactoryContractSlot();
     void ShowFindFactoryContractSlot();
+
+    //√Ê¡œ
+    void ShowMianLiaoChuRuKuSlot();
+
 };
 
 #endif // MAINWINDOW_H

@@ -14,15 +14,16 @@ MysqlTableConfig* MysqlTableConfig::getInstance(){
 #include <QDir>
 #include <QDebug>
 #include <QSettings>
+#include <QMessageBox>
 void MysqlTableConfig::LoadConfig(){
     //±éÀúÎÄ¼þ¼Ð
     TableConfigdata.clear();
-    QString DirPath ="D:/TuYuErp/TuYuErp/MysqlTableConfig/";
+    QString DirPath ="./MysqlTableConfig/";
     QDir dir(DirPath);
     QStringList nameFilters;
     nameFilters << "*.ini";
     QStringList files = dir.entryList(nameFilters, QDir::Files|QDir::Readable, QDir::Name);
-    for(int i;i<files.size();i++){
+    for(int i = 0;i<files.size();i++){
        QString inipath =  DirPath+files.at(i);
        QSettings settings(inipath,QSettings::IniFormat);
        QSet<QString> set;

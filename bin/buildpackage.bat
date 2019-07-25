@@ -1,0 +1,2 @@
+windeployqt TuYuErp.exe
+pause

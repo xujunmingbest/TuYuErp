@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
 
     MysqlTableConfig::getInstance();
     MainWindow w;
+
+    //w.showMaximized();
     Login lo;
     lo.exec();
-
-
     if( lo.get_login_success()){
          w.showMaximized();
     }else{
