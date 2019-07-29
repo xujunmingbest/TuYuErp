@@ -17,11 +17,15 @@ public:
 
 private:
     Ui::MiaoliaoRuku *ui;
-
+    bool ChukuSlotValider(QVector<QMap<QString,QString>> &RuKudata);
+    bool RukuSlotValider();
+    void FormatIntlineEdit();
+    void TiaoZhuang(int page);
 private slots:
     void MianLiaoRukuSlot();
     void MianLiaoChukuSlot();
-
+    void MianLiaoJieYuSlot();
+    void TiaoZhuangSlot();
 };
 
 #endif // MIAOLIAORUKU_H

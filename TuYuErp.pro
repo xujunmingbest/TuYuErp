@@ -34,7 +34,13 @@ SOURCES += main.cpp\
     FactoryContract/lookfactorycontract.cpp \
     Mianliao/miaoliaoruku.cpp \
     Mianliao/findmianliao.cpp \
-    Mianliao/mianliaojieyu.cpp
+    FuLiao/fuliaochuruku.cpp \
+    ChengPin/chengpinchuruku.cpp \
+    Mianliao/mianliaoedit.cpp \
+    Mianliao/mianliao_chuku_edit.cpp \
+    FuLiao/findfuliao.cpp \
+    FuLiao/chukuedit.cpp \
+    FuLiao/rukuedit.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -47,7 +53,13 @@ HEADERS  += mainwindow.h \
     FactoryContract/lookfactorycontract.h \
     Mianliao/miaoliaoruku.h \
     Mianliao/findmianliao.h \
-    Mianliao/mianliaojieyu.h
+    FuLiao/fuliaochuruku.h \
+    ChengPin/chengpinchuruku.h \
+    Mianliao/mianliaoedit.h \
+    Mianliao/mianliao_chuku_edit.h \
+    FuLiao/findfuliao.h \
+    FuLiao/chukuedit.h \
+    FuLiao/rukuedit.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -56,4 +68,10 @@ FORMS    += mainwindow.ui \
     FactoryContract/lookfactorycontract.ui \
     Mianliao/miaoliaoruku.ui \
     Mianliao/findmianliao.ui \
-    Mianliao/mianliaojieyu.ui
+    FuLiao/fuliaochuruku.ui \
+    ChengPin/chengpinchuruku.ui \
+    Mianliao/mianliaoedit.ui \
+    Mianliao/mianliao_chuku_edit.ui \
+    FuLiao/findfuliao.ui \
+    FuLiao/chukuedit.ui \
+    FuLiao/rukuedit.ui

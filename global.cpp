@@ -26,7 +26,8 @@ bool CUser::LoadAuth() //º”‘ÿ»®œﬁ
    MysqlOperate *mysqlInstance = MysqlOperate::getInstance();
    QMap<QString,QString> conditions={{"role",m_role}};
    QVector<QMap<QString,QString>> data;
-   mysqlInstance->Find("user_auth",&conditions,nullptr,data);
+   MakeConditions makeconditions("user_auth");
+   mysqlInstance->Find(makeconditions,data);
    if( data.size() == 0) return false;
    QJsonObject jo = QstringToJson(data[0].value("auth"));
    qDebug() << data[0].value("auth") << m_name;

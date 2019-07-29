@@ -25,7 +25,10 @@ void Login::LoginSlot(){
     MysqlOperate * MysqlInstance = MysqlOperate::getInstance();
     QMap<QString,QString> conditions={{"name",Name},{"password",password}};
     QVector<QMap<QString,QString>> data;
-    MysqlInstance->Find("user",&conditions,nullptr,data);
+    MakeConditions Conditions("user");
+    MysqlInstance->Find(Conditions,data);
+
+
     if( data.size() == 0) {
         is_login_success = false;
          QMessageBox::about(NULL, SS("错误提示"), SS("用户名或密码错误"));

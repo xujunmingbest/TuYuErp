@@ -73,7 +73,7 @@ void AddFactoryContract::DeleteProduct(){
 #include "MysqlTableConfig/MysqlTableConfig.h"
 void AddFactoryContract::AddContract(){
    if( ui->LineEdit_contract_id->text().trimmed().length() == 0) {
-       QMessageBox::about(NULL, SS("错误提示"), "合同编号不能为空");
+       QMessageBox::about(NULL, SS("错误提示"), SS("合同编号不能为空"));
        return ;
    }
    MysqlTableConfig * m_TableConfig  = MysqlTableConfig::getInstance();

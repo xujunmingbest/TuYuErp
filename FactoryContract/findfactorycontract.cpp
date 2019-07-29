@@ -41,11 +41,11 @@ void FindFactoryContract::ShaiXuan(){
    QString  contract_id = ui->lineEdit->text().trimmed();
 
    MysqlOperate *m_mysqloperate = MysqlOperate::getInstance();
-   QMap<QString,QString> likeConditions;
-   if(contract_id.length() >0 )likeConditions.insert("contract_id",contract_id);
+   MakeConditions makeconditions("factory_contract");
+   if(contract_id.length() >0 ) makeconditions.AddEqual("contract_id",contract_id);
+   makeconditions.AddPage(1);
    QVector<QMap<QString,QString>> data;
-
-   m_mysqloperate->Find("factory_contract",nullptr,&likeConditions,data);
+   m_mysqloperate->Find(makeconditions,data);
    if( data.size() == 0 ) return ;
 
    m_tw->setRowCount(data.size());
@@ -63,7 +63,7 @@ void FindFactoryContract::ShaiXuan(){
        m_tw->setCellWidget(i,4,pBtn);
    }
 
-   int data_count = m_mysqloperate->Count("factory_contract",nullptr,&likeConditions);
+   int data_count = m_mysqloperate->Count(makeconditions);
    int total_page = data_count/PAGESIZE;
    if(data_count%PAGESIZE >0 ) total_page++;
    QString pagetext = QStringLiteral("ตฺ %1 าณ/ %2 าณ").arg(1).arg(total_page);
@@ -103,10 +103,10 @@ void FindFactoryContract::TiaoZhuang(){
     m_tw->clearContents();
     MysqlOperate *m_mysqloperate = MysqlOperate::getInstance();
     QString  contract_id = ui->lineEdit->text().trimmed();
-    QMap<QString,QString> likeConditions;
-    if(contract_id.length() >0 )likeConditions.insert("contract_id",contract_id);
+    MakeConditions makeconditions("factory_contract");
+    if(contract_id.length() >0 )makeconditions.AddEqual("contract_id",contract_id);
 
-    int data_count = m_mysqloperate->Count("factory_contract",nullptr,&likeConditions);
+    int data_count = m_mysqloperate->Count(makeconditions);
     int total_page = data_count/PAGESIZE;
     if(data_count%PAGESIZE >0 ) total_page++;
 
@@ -116,11 +116,10 @@ void FindFactoryContract::TiaoZhuang(){
 
     QString pagetext = QStringLiteral("ตฺ %1 าณ/ %2 าณ").arg(page).arg(total_page);
     ui->label_page->setText(pagetext);
-
-
+    makeconditions.AddPage(page);
     QVector<QMap<QString,QString>> data;
 
-    m_mysqloperate->Find("factory_contract",nullptr,&likeConditions,data,page);
+    m_mysqloperate->Find(makeconditions,data);
     if( data.size() == 0 ) return ;
 
     m_tw->setRowCount(data.size());

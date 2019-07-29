@@ -43,9 +43,10 @@ LookFactoryContract::~LookFactoryContract()
 
 void LookFactoryContract::LoadData(QString Contract_id){
     MysqlOperate *m_MysqlOperate = MysqlOperate::getInstance();
-    QMap<QString,QString> conditions = {{"contract_id",Contract_id}};
     QVector<QMap<QString,QString>> data;
-    m_MysqlOperate->Find("factory_contract",&conditions,nullptr, data);
+    MakeConditions makeconditions("factory_contract");
+    makeconditions.AddEqual("contract_id",Contract_id);
+    m_MysqlOperate->Find(makeconditions,data);
     if(data.size() == 0 ) return;
     MysqlTableConfig *m_TableConfig = MysqlTableConfig::getInstance();
 
@@ -74,15 +75,17 @@ void LookFactoryContract::LoadData(QString Contract_id){
     ui->LineEdit_yi_name_2->setText( ui->LineEdit_yi_name->text());
 
     // ╪сть widget
-     m_MysqlOperate->Find("factory_product",&conditions,nullptr, data);
-     QTableWidget *m_tw = ui->table_product;
-     m_tw->clearContents();
-     m_tw->setRowCount(data.size());
-     for(int i = 0;i<data.size();i++){
-         QMap<QString,int>::const_iterator itmap;
-         QMap<QString,QString> &rowdata = data[i];
-         for (itmap = ProductTableIndex.constBegin(); itmap != ProductTableIndex.constEnd(); ++itmap) {
-             m_tw->setItem(i, itmap.value(),new QTableWidgetItem(rowdata.value(itmap.key())));
-         }
-     }
+    MakeConditions conditions_product("factory_product");
+    conditions_product.AddEqual("contract_id",Contract_id);
+    m_MysqlOperate->Find(conditions_product, data);
+    QTableWidget *m_tw = ui->table_product;
+    m_tw->clearContents();
+    m_tw->setRowCount(data.size());
+    for(int i = 0;i<data.size();i++){
+        QMap<QString,int>::const_iterator itmap;
+        QMap<QString,QString> &rowdata = data[i];
+        for (itmap = ProductTableIndex.constBegin(); itmap != ProductTableIndex.constEnd(); ++itmap) {
+            m_tw->setItem(i, itmap.value(),new QTableWidgetItem(rowdata.value(itmap.key())));
+        }
+    }
 }

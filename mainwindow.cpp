@@ -21,10 +21,31 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
     {//系统管理
-        QMenu* Q =  ui->menu_2;
+        QMenu* Q =  ui->menu_cangku;
         {
             QAction* action = Q->addAction(SS("面料出入库"));
             connect(action, SIGNAL(triggered()), this, SLOT(ShowMianLiaoChuRuKuSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("面料明细"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowMianLiaoMingXiSlot()));
+        }
+
+        {
+            QAction* action = Q->addAction(SS("辅料出入库"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowFuLiaoChuRuKuSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("辅料明细"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowFuLiaoMingXiSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("成品出入库"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinChuRuKuSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("成品结余统计"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinJieYuSlot()));
         }
     }
 
@@ -104,3 +125,67 @@ void MainWindow::ShowMianLiaoChuRuKuSlot(){
         c1->setWindowTitle(Title);
     }
 }
+#include "Mianliao/findmianliao.h"
+void MainWindow::ShowMianLiaoMingXiSlot(){
+    QString Title = SS("面料明细");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        FindMianLiao *c1 = new FindMianLiao;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+
+}
+
+
+#include "FuLiao/fuliaochuruku.h"
+void MainWindow::ShowFuLiaoChuRuKuSlot(){
+    QString Title = SS("辅料出入库");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        FuLiaoChuRuKu *c1 = new FuLiaoChuRuKu;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+
+}
+
+#include "FuLiao/findfuliao.h"
+void MainWindow::ShowFuLiaoMingXiSlot(){
+    QString Title = SS("辅料明细");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        findfuliao *c1 = new findfuliao;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+
+
+}
+
+
+#include "ChengPin/chengpinchuruku.h"
+void MainWindow::ShowChengPinChuRuKuSlot(){
+    QString Title = SS("成品出入库");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        ChengPinChuRuKu *c1 = new ChengPinChuRuKu;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+}
+void MainWindow::ShowChengPinJieYuSlot(){
+
+
+}
+
+
+

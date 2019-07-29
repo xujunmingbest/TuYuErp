@@ -27,7 +27,15 @@ private slots:
 
     //面料
     void ShowMianLiaoChuRuKuSlot();
+    void ShowMianLiaoMingXiSlot();
+    //辅料
+    void ShowFuLiaoChuRuKuSlot();
+    void ShowFuLiaoMingXiSlot();
 
+
+    //成品
+    void ShowChengPinChuRuKuSlot();
+    void ShowChengPinJieYuSlot();
 };
 
 #endif // MAINWINDOW_H
