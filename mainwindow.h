@@ -5,6 +5,8 @@
 #include <QMdiSubWindow>
 #include <QMdiArea>
 #include "MysqlOperate/mysqloperate.h"
+
+#include "FactoryContract/addfactorycontract.h"
 namespace Ui {
 class MainWindow;
 }
@@ -18,7 +20,7 @@ public:
     ~MainWindow();
     QMdiArea *mdiArea;
     QMdiSubWindow *GetSubWindow(QString title);
-    void ShowLookFactoryContract(QString Contract_id);
+    void ShowFactoryContract(QString Contract_id,e_mode mode);
 private:
     Ui::MainWindow *ui;
 private slots:
@@ -35,7 +37,7 @@ private slots:
 
     //³ÉÆ·
     void ShowChengPinChuRuKuSlot();
-    void ShowChengPinJieYuSlot();
+    void ShowChengPinMingXiSlot();
 };
 
 #endif // MAINWINDOW_H

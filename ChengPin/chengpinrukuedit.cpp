@@ -1,75 +1,56 @@
-#include "mianliaoedit.h"
-#include "ui_mianliaoedit.h"
+#include "chengpinrukuedit.h"
+#include "ui_chengpinrukuedit.h"
 
-MianliaoEdit::MianliaoEdit(QWidget *parent) :
+ChengPinRuKuEdit::ChengPinRuKuEdit(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MianliaoEdit)
+    ui(new Ui::ChengPinRuKuEdit)
 {
     ui->setupUi(this);
+
     m_MysqlOperate = MysqlOperate::getInstance();
-    jieyu_mishu = 0;
-    jieyu_gongjin = 0;
-    jieyu_juanshu = 0;
-    mishu = 0;
-    gongjin = 0;
-    juanshu = 0;
+    jieyu_shuliang = 0;
+    shuliang = 0;
 
     QIntValidator *IntValidator =new QIntValidator(0, 10000000);
+    ui->LineEdit_shuliang->setValidator(IntValidator);
 
-    ui->LineEdit_mishu->setValidator(IntValidator);
-    ui->LineEdit_juanshu->setValidator(IntValidator);
-    ui->LineEdit_gongjin->setValidator(IntValidator);
 }
 
-MianliaoEdit::~MianliaoEdit()
+ChengPinRuKuEdit::~ChengPinRuKuEdit()
 {
     delete ui;
 }
 
 
+
 #include "MysqlTableConfig/MysqlTableConfig.h"
-bool MianliaoEdit::RukuSlotValider(){
+bool ChengPinRuKuEdit::RukuSlotValider(){
     if( ui->LineEdit_ruku_id->text().trimmed().length() == 0){
         QMessageBox::about(NULL, SS("错误提示"), SS("请填写入库单号"));
         return false;
     }
     if( ui->LineEdit_name->text().trimmed().length() == 0){
-        QMessageBox::about(NULL, SS("错误提示"), SS("请填写面料名称"));
+        QMessageBox::about(NULL, SS("错误提示"), SS("请填写成品料名称"));
         return false;
     }
-    int MiShuRead =ui->LineEdit_mishu->text().trimmed().toInt();
-    int JuanShuRead =ui->LineEdit_juanshu->text().trimmed().toInt();
-    int GongjingRead =ui->LineEdit_gongjin->text().trimmed().toInt();
+    int ShuliangRead =ui->LineEdit_shuliang->text().trimmed().toInt();
 
-    if( MiShuRead < (mishu-jieyu_mishu)) {
-        QMessageBox::about(NULL, SS("错误提示"), SS("米数小于出库库存,当前入库单号米数已出库:")+QString::number(mishu-jieyu_mishu));
+    if( ShuliangRead < (shuliang-jieyu_shuliang)) {
+        QMessageBox::about(NULL, SS("错误提示"), SS("数量小于出库库存,当前入库单号数量已出库:")+QString::number(shuliang-jieyu_shuliang));
         return false;
     }
 
-    if( GongjingRead < (gongjin-jieyu_gongjin)) {
-        QMessageBox::about(NULL, SS("错误提示"), SS("公斤数小于出库库存,当前入库单号公斤数已出库:")+QString::number(gongjin-jieyu_gongjin));
-        return false;
-    }
-
-    if( JuanShuRead < (juanshu-jieyu_juanshu)) {
-        QMessageBox::about(NULL, SS("错误提示"), SS("卷数小于出库库存,当前入库单号卷数已出库:")+QString::number(juanshu-jieyu_juanshu));
-        return false;
-    }
-    jieyu_mishu = MiShuRead -(mishu-jieyu_mishu);
-    jieyu_juanshu = JuanShuRead -(juanshu-jieyu_juanshu);
-    jieyu_gongjin = GongjingRead -(gongjin-jieyu_gongjin);
-    juanshu = JuanShuRead;
-    mishu = MiShuRead;
-    gongjin   = GongjingRead;
+    jieyu_shuliang = ShuliangRead -(shuliang-jieyu_shuliang);
+    shuliang = ShuliangRead;
     return true;
 }
 
-void MianliaoEdit::MianLiaoRukuEditSlot(){
+void ChengPinRuKuEdit::ChengPinRukuEditSlot(){
     if( !RukuSlotValider()) return ;
 
     MysqlOperate * m_MysqlOperate = MysqlOperate::getInstance();
     MysqlTableConfig* m_TableConfig = MysqlTableConfig::getInstance();
-    QSet<QString> columns = m_TableConfig->get_table_columns("mianliao_ruku");
+    QSet<QString> columns = m_TableConfig->get_table_columns("chengpin_ruku");
     QMap<QString,QString> RukuData;
     QSet<QString>::const_iterator itset;
     for (itset = columns.constBegin(); itset != columns.constEnd(); ++itset) {
@@ -91,11 +72,9 @@ void MianliaoEdit::MianLiaoRukuEditSlot(){
         }
     }
 
-    RukuData.insert("jieyu_mishu",QString::number(jieyu_mishu));
-    RukuData.insert("jieyu_gongjin",QString::number(jieyu_gongjin));
-    RukuData.insert("jieyu_juanshu",QString::number(jieyu_juanshu));
+    RukuData.insert("jieyu_shuliang",QString::number(jieyu_shuliang));
 
-    MakeConditions cd("mianliao_ruku");
+    MakeConditions cd("chengpin_ruku");
     cd.AddEqual("ruku_id",ruku_id);
     cd.AddEqual("version",QString::number(version));
     RukuData.insert("version",QString::number(version));
@@ -107,15 +86,15 @@ void MianliaoEdit::MianLiaoRukuEditSlot(){
 }
 
 
-bool MianliaoEdit::LoadData(QString Ruku_id){
+bool ChengPinRuKuEdit::LoadData(QString Ruku_id){
     ruku_id =Ruku_id;
-    MakeConditions cd("mianliao_ruku");
+    MakeConditions cd("chengpin_ruku");
     cd.AddEqual("ruku_id",ruku_id);
     QMap<QString,QString> data;
     if( !m_MysqlOperate->Get(cd,data) ) return false;
 
     MysqlTableConfig* m_TableConfig = MysqlTableConfig::getInstance();
-    QSet<QString> columns = m_TableConfig->get_table_columns("mianliao_ruku");
+    QSet<QString> columns = m_TableConfig->get_table_columns("chengpin_ruku");
 
     QSet<QString>::const_iterator itset;
     for (itset = columns.constBegin(); itset != columns.constEnd(); ++itset) {
@@ -136,12 +115,8 @@ bool MianliaoEdit::LoadData(QString Ruku_id){
             }
         }
     }
-    jieyu_mishu = data.value("jieyu_mishu").toInt();
-    jieyu_gongjin = data.value("jieyu_gongjin").toInt();
-    jieyu_juanshu =data.value("jieyu_juanshu").toInt();
-    mishu = data.value("mishu").toInt();
-    gongjin = data.value("gongjin").toInt();
-    juanshu = data.value("juanshu").toInt();
+    jieyu_shuliang = data.value("jieyu_shuliang").toInt();
+    shuliang = data.value("shuliang").toInt();
     version = data.value("version").toInt();
     return true;
 }

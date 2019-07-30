@@ -224,7 +224,7 @@ void FuLiaoChuRuKu::TiaoZhuang(int page){
         m_tb->setItem(i,1,new QTableWidgetItem( data[i].value("name")));
         m_tb->setItem(i,2,new QTableWidgetItem(data[i].value("jieyu_shuliang")));
         m_tb->setItem(i,3,new QTableWidgetItem(data[i].value("danwei")));
-        m_tb->setItem(i,3,new QTableWidgetItem(data[i].value("detail")));
+        m_tb->setItem(i,4,new QTableWidgetItem(data[i].value("detail")));
     }
 }
 

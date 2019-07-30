@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1255</width>
-    <height>1597</height>
+    <height>1292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>1235</width>
-        <height>1577</height>
+        <height>1272</height>
        </rect>
       </property>
       <widget class="QWidget" name="layoutWidget">
@@ -191,44 +191,11 @@
 一.	产品名称.规格.颜色.数量.金额.交货时间及数量:</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>910</y>
-         <width>1101</width>
-         <height>261</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Agency FB</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>二.	原料采购：由甲方采购。
-三.	质量要求验收标准,方法：按行业标准验收（色牢度跟风格按乙方来样）环保，不可有大面积脏污。
-四.	甲方对产品质量负责条件，严格按照确认品质生产
-五.	包装标准：薄膜袋包装
-六.	付款方式：                                    
-七.	交提货地点: 交货地点甲方仓库，到货地点乙方仓库。（绍兴）
-八.	运输方式及费用承担：费用由甲方承担。
-九.	交提货期限:1-15
-十.	解决合同纠纷的方法: 如有纠纷，甲方或乙方都有权要求在各自所在地法院解决。其他未尽事宜，双方协商解决。
-十一.	本合同传真件有效，添加、涂改无效。 
-十二.	本合同一式贰份，双方各持壹份。本合同双方代表签字或盖章且定金到甲方账户后生效。                    
-
-附则：与本合同有关的传真、信函、交货凭证经双方签字或盖章确认后均视为本合同组成部分。</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="formLayoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>1180</y>
+         <y>910</y>
          <width>511</width>
          <height>311</height>
         </rect>
@@ -466,7 +433,7 @@
        <property name="geometry">
         <rect>
          <x>540</x>
-         <y>1180</y>
+         <y>910</y>
          <width>511</width>
          <height>311</height>
         </rect>
@@ -700,30 +667,11 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="pushButton">
-       <property name="geometry">
-        <rect>
-         <x>450</x>
-         <y>1500</y>
-         <width>161</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Agency FB</family>
-         <pointsize>11</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>确认添加合同</string>
-       </property>
-      </widget>
       <widget class="QTableWidget" name="table_product">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>530</y>
+         <y>180</y>
          <width>1221</width>
          <height>301</height>
         </rect>
@@ -744,271 +692,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
-         <width>661</width>
-         <height>328</height>
-        </rect>
-       </property>
-       <layout class="QFormLayout" name="formLayout_3">
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="LineEdit_name">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="Label_6">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>颜色</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="LineEdit_color">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="Label_7">
-          <property name="minimumSize">
-           <size>
-            <width>90</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>规格（平方克重）</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="LineEdit_spec">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="Label_8">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>毛高</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="LineEdit_maogao">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="Label_9">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>有效门幅/㎝</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="LineEdit_menfu">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="Label_10">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>单位</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="LineEdit_danwei">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="Label_11">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>数量</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="LineEdit_shuliang">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="Label_12">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>单价/含税/足米（元/米）</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QLineEdit" name="LineEdit_danjia">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="Label_13">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>金额（元）</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QLineEdit" name="LineEdit_jine">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="Label_14">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>备注</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QLineEdit" name="LineEdit_comment">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QPushButton" name="pushButton_add">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>添加</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="Label_5">
-          <property name="font">
-           <font>
-            <family>Agency FB</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>产品名称</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>14</x>
-         <y>850</y>
+         <y>530</y>
          <width>911</width>
          <height>31</height>
         </rect>
@@ -1062,6 +746,276 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="formLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>570</y>
+         <width>1041</width>
+         <height>326</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_6">
+        <item row="0" column="0">
+         <widget class="QLabel" name="Label_35">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>二.原料采购:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_2">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="Label_36">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>三.质量要求验收标准,方法:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_3">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="Label_37">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>四.甲方对产品质量负责条件，严格按照确认品质生产</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="Label_38">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>五.包装标准：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_5">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="Label_39">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>六.付款方式： </string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_6">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="Label_40">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>七.交提货地点:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_7">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="Label_41">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>八.运输方式及费用承担：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_8">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="Label_42">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>九.交提货期限</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="LineEdit_xieyi_9">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0" colspan="2">
+         <widget class="QLabel" name="Label_43">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>十.解决合同纠纷的方法: 如有纠纷，甲方或乙方都有权要求在各自所在地法院解决。其他未尽事宜，双方协商解决。</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="2">
+         <widget class="QLabel" name="Label_44">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>十一.本合同传真件有效，添加、涂改无效。 </string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0" colspan="2">
+         <widget class="QLabel" name="Label_45">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>十二.本合同一式贰份，双方各持壹份。本合同双方代表签字或盖章且定金到甲方账户后生效。</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0" colspan="2">
+         <widget class="QLabel" name="Label_46">
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>附则：与本合同有关的传真、信函、交货凭证经双方签字或盖章确认后均视为本合同组成部分。</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>490</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>添加一列</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>1230</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Agency FB</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>添加合同</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -1070,18 +1024,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_add</sender>
+   <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>AddFactoryContract</receiver>
-   <slot>TianJiaProduct()</slot>
+   <slot>AddLine()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>679</x>
-     <y>523</y>
+     <x>99</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1164</x>
-     <y>704</y>
+     <x>4</x>
+     <y>819</y>
     </hint>
    </hints>
   </connection>
@@ -1089,15 +1043,15 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>AddFactoryContract</receiver>
-   <slot>AddContract()</slot>
+   <slot>ButtonSlot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>579</x>
-     <y>1444</y>
+     <x>566</x>
+     <y>1249</y>
     </hint>
     <hint type="destinationlabel">
-     <x>618</x>
-     <y>1472</y>
+     <x>596</x>
+     <y>1287</y>
     </hint>
    </hints>
   </connection>
@@ -1105,5 +1059,7 @@
  <slots>
   <slot>TianJiaProduct()</slot>
   <slot>AddContract()</slot>
+  <slot>AddLine()</slot>
+  <slot>ButtonSlot()</slot>
  </slots>
 </ui>

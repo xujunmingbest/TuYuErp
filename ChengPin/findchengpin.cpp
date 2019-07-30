@@ -1,22 +1,22 @@
-#include "findfuliao.h"
-#include "ui_findfuliao.h"
+#include "findchengpin.h"
+#include "ui_findchengpin.h"
 
-findfuliao::findfuliao(QWidget *parent) :
+findchengpin::findchengpin(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::findfuliao)
+    ui(new Ui::findchengpin)
 {
     ui->setupUi(this);
     m_MysqlOperate = MysqlOperate::getInstance();
     {
         QTableWidget *m_tb = ui->tableWidget_ruku;
-        m_tb->setColumnCount(14+2);
+        m_tb->setColumnCount(13+2);
         m_tb->setRowCount(0);
         m_tb->setEditTriggers(QAbstractItemView::NoEditTriggers);
         QStringList head ;
-        head << SS("入库单号") << SS("日期") << SS("辅料名称") <<SS("数量")<<
-                SS("单位") << SS("明细") << SS("颜色") <<SS("规格")<<
-                SS("其他费用") << SS("单价") << SS("总金额") <<SS("供应商")<<
-                SS("结余数量") << SS("备注") <<SS("入库人") << SS("编辑") << SS("删除");
+        head << SS("入库单号") << SS("日期") << SS("订单号")<< SS("成品名称")
+             << SS("数量")<< SS("单位") << SS("明细") << SS("面料")
+             << SS("其他费用") << SS("制作工厂") << SS("结余数量") <<SS("备注")
+             << SS("入库人") << SS("编辑") << SS("删除");
 
         m_tb->setHorizontalHeaderLabels(head);
         m_tb->horizontalHeader()->setMinimumHeight(25);
@@ -24,29 +24,27 @@ findfuliao::findfuliao(QWidget *parent) :
 
         RukuTableIndex.insert("ruku_id",0);
         RukuTableIndex.insert("date",1);
-        RukuTableIndex.insert("name",2);
-        RukuTableIndex.insert("shuliang",3);
-        RukuTableIndex.insert("danwei",4);
-        RukuTableIndex.insert("detail",5);
-        RukuTableIndex.insert("color",6);
-        RukuTableIndex.insert("spec",7);
+        RukuTableIndex.insert("order_id",2);
+        RukuTableIndex.insert("name",3);
+        RukuTableIndex.insert("shuliang",4);
+        RukuTableIndex.insert("danwei",5);
+        RukuTableIndex.insert("detail",6);
+        RukuTableIndex.insert("mianliao",7);
         RukuTableIndex.insert("otherfee",8);
-        RukuTableIndex.insert("danjia",9);
-        RukuTableIndex.insert("zongjine",10);
-        RukuTableIndex.insert("gongyingshang",11);
-        RukuTableIndex.insert("jieyu_shuliang",12);
-        RukuTableIndex.insert("comment",13);
-        RukuTableIndex.insert("rukuren",14);
+        RukuTableIndex.insert("makefactory",9);
+        RukuTableIndex.insert("jieyu_shuliang",10);
+        RukuTableIndex.insert("comment",11);
+        RukuTableIndex.insert("rukuren",12);
     }
     {
         QTableWidget *m_tb = ui->tableWidget_chuku;
-        m_tb->setColumnCount(11);
+        m_tb->setColumnCount(10);
         m_tb->setRowCount(0);
         m_tb->setEditTriggers(QAbstractItemView::NoEditTriggers);
         QStringList head ;
         head << SS("入库单号") << SS("日期") << SS("数量") << SS("单位")
-             << SS("明细") << SS("订单号") << SS("领取人") <<SS("目标去向")
-             << SS("备注") << SS("编辑") << SS("删除");
+             << SS("明细")  << SS("领取人") <<SS("目标去向")<< SS("备注")
+             << SS("编辑") << SS("删除");
 
         m_tb->setHorizontalHeaderLabels(head);
         m_tb->horizontalHeader()->setMinimumHeight(25);
@@ -57,59 +55,69 @@ findfuliao::findfuliao(QWidget *parent) :
         ChukuTableIndex.insert("shuliang",2);
         ChukuTableIndex.insert("danwei",3);
         ChukuTableIndex.insert("detail",4);
-        ChukuTableIndex.insert("order_id",5);
-        ChukuTableIndex.insert("lingquren",6);
-        ChukuTableIndex.insert("targetto",7);
-        ChukuTableIndex.insert("comment",8);
+        ChukuTableIndex.insert("lingquren",5);
+        ChukuTableIndex.insert("targetto",6);
+        ChukuTableIndex.insert("comment",7);
     }
 }
 
-findfuliao::~findfuliao()
+findchengpin::~findchengpin()
 {
     delete ui;
 }
 
-bool findfuliao::getConditions(MakeConditions &conditions){
+
+bool findchengpin::getConditions(MakeConditions &conditions){
     QString name = ui->lineEdit_name->text().trimmed();
     if(name.length() != 0){
         conditions.AddEqual("name",name);
     }
+    QString order_id = ui->lineEdit_order_id->text().trimmed();
+    if(order_id.length() != 0){
+        conditions.AddEqual("order_id",order_id);
+    }
+
     QString BeginTime = ui->dateEdit_begindate->text();
     QString EndTime = ui->dateEdit_enddate->text();
     conditions.AddBetween("date",BeginTime,EndTime);
     return true;
 }
 
-bool findfuliao::getConditions_2(MakeConditions &conditions){
+bool findchengpin::getConditions_2(MakeConditions &conditions){
 
     QString name = ui->lineEdit_name_2->text().trimmed();
     if(name.length() != 0){
         conditions.AddEqual("name",name);
     }
+    QString order_id = ui->lineEdit_order_id_2->text().trimmed();
+    if(order_id.length() != 0){
+        conditions.AddEqual("order_id",order_id);
+    }
+
     return true;
 }
 
 
-void findfuliao::shaixuanSlot(){
+void findchengpin::shaixuanSlot(){
    TiaoZhuang(1);
 }
 
-void findfuliao::shaixuanSlot_2(){
+void findchengpin::shaixuanSlot_2(){
    TiaoZhuang_2(1);
 }
 
-void findfuliao::TiaoZhuangSlot(){
+void findchengpin::TiaoZhuangSlot(){
     int page = ui->lineEdit_page->text().trimmed().toInt();
     TiaoZhuang(page);
 }
 
-void findfuliao::TiaoZhuangSlot_2(){
+void findchengpin::TiaoZhuangSlot_2(){
     int page = ui->lineEdit_page_2->text().trimmed().toInt();
     TiaoZhuang_2(page);
 }
 
-  void findfuliao::TiaoZhuang(int page){
-      MakeConditions cd_ruku("fuliao_ruku");
+  void findchengpin::TiaoZhuang(int page){
+      MakeConditions cd_ruku("chengpin_ruku");
       if( !getConditions(cd_ruku) ) return ;
 
       MysqlOperate* m_MysqlOperate = MysqlOperate::getInstance();
@@ -120,7 +128,6 @@ void findfuliao::TiaoZhuangSlot_2(){
       else if(page > total_page) page = total_page;
       QString pagetext = QStringLiteral("第 %1 页/ %2 页").arg(page).arg(total_page);
       ui->label_page->setText(pagetext);
-
 
       cd_ruku.AddPage(page);
       MysqlOperate * m_mysqlins= MysqlOperate::getInstance();
@@ -140,32 +147,30 @@ void findfuliao::TiaoZhuangSlot_2(){
               QPushButton *pBtn = new QPushButton(SS("编辑"));
               pBtn->setProperty("ruku_id",rowdata.value("ruku_id"));
               connect(pBtn, SIGNAL(clicked()), this, SLOT(EditRuKu()));
-              m_tb->setCellWidget(i,14,pBtn);
+              m_tb->setCellWidget(i,13,pBtn);
           }
           {
               QPushButton *pBtn = new QPushButton(SS("删除"));
               pBtn->setProperty("ruku_id",rowdata.value("ruku_id"));
               pBtn->setProperty("row",i);
               connect(pBtn, SIGNAL(clicked()), this, SLOT(DeleteRuKu()));
-              m_tb->setCellWidget(i,15,pBtn);
+              m_tb->setCellWidget(i,14,pBtn);
           }
       }
 
   }
 
 
-  void findfuliao::TiaoZhuang_2(int page){
-      MakeConditions cd_ruku("fuliao_ruku");
+  void findchengpin::TiaoZhuang_2(int page){
+      MakeConditions cd_ruku("chengpin_ruku");
       if( !getConditions_2(cd_ruku) ) return ;
 
-      MakeConditions cd_chuku("fuliao_chuku");
-      QString order_id = ui->lineEdit_order_id_2->text().trimmed();
+      MakeConditions cd_chuku("chengpin_chuku");
       QString BeginTime = ui->dateEdit_begindate_2->text();
       QString EndTime = ui->dateEdit_enddate_2->text();
       cd_chuku.AddBetween("date",BeginTime,EndTime);
       cd_chuku.AddIn("ruku_id","ruku_id",cd_ruku);
       QString Order_id = ui->lineEdit_order_id_2->text().trimmed();
-      if( Order_id.length() > 0) cd_chuku.AddEqual("order_id",Order_id);
 
 
       MysqlOperate* m_MysqlOperate = MysqlOperate::getInstance();
@@ -197,7 +202,7 @@ void findfuliao::TiaoZhuangSlot_2(){
              pBtn->setProperty("ruku_id",rowdata.value("ruku_id"));
              pBtn->setProperty("id",rowdata.value("id"));
              connect(pBtn, SIGNAL(clicked()), this, SLOT(EditChuKu()));
-             m_tb->setCellWidget(i,9,pBtn);
+             m_tb->setCellWidget(i,8,pBtn);
           }
           {
              QPushButton *pBtn = new QPushButton(SS("删除"));
@@ -205,7 +210,7 @@ void findfuliao::TiaoZhuangSlot_2(){
              pBtn->setProperty("id",rowdata.value("id"));
              pBtn->setProperty("row",i);
              connect(pBtn, SIGNAL(clicked()), this, SLOT(DeleteChuKu()));
-             m_tb->setCellWidget(i,10,pBtn);
+             m_tb->setCellWidget(i,9,pBtn);
           }
       }
 
@@ -213,13 +218,13 @@ void findfuliao::TiaoZhuangSlot_2(){
 
 
 
-  void findfuliao::DeleteRuKu(){
+  void findchengpin::DeleteRuKu(){
       QTableWidget *m_tw = ui->tableWidget_ruku;
       QPushButton *btn = (QPushButton *)sender();
       QString ruku_id = btn->property("ruku_id").toString();
-      MakeConditions mc_ruku("fuliao_ruku");
+      MakeConditions mc_ruku("chengpin_ruku");
       mc_ruku.AddEqual("ruku_id",ruku_id);
-      MakeConditions mc_chuku("fuliao_chuku");
+      MakeConditions mc_chuku("chengpin_chuku");
       mc_chuku.AddEqual("ruku_id",ruku_id);
 
       switch( QMessageBox::warning(NULL, SS("警告"),SS("确定要删除该入库单吗?对应的出库单也会被删除"),
@@ -234,7 +239,7 @@ void findfuliao::TiaoZhuangSlot_2(){
               m_MysqlOperate->Commit();
               m_tw->removeRow(btn->property("row").toInt());
               for(int i=0;i<m_tw->rowCount();i++){
-                  m_tw->cellWidget(i,15)->setProperty("row",i);
+                  m_tw->cellWidget(i,14)->setProperty("row",i);
               }
               QMessageBox::about(NULL, SS("提示"), SS("删除成功"));
           }else{
@@ -245,10 +250,10 @@ void findfuliao::TiaoZhuangSlot_2(){
 
   }
 
-#include "rukuedit.h"
+#include "chengpinrukuedit.h"
   //调用删除面料接口
- void findfuliao::EditRuKu(){
-    RuKuEdit wnd ;
+ void findchengpin::EditRuKu(){
+    ChengPinRuKuEdit wnd ;
     QPushButton *btn = (QPushButton *)sender();
     QString ruku_id = btn->property("ruku_id").toString();
     if( !wnd.LoadData(ruku_id)){
@@ -260,15 +265,15 @@ void findfuliao::TiaoZhuangSlot_2(){
  }
 
 
- void findfuliao::DeleteChuKu(){
+ void findchengpin::DeleteChuKu(){
      QTableWidget *m_tw = ui->tableWidget_chuku;
      QPushButton *btn = (QPushButton *)sender();
      QString ruku_id = btn->property("ruku_id").toString();
      QString id = btn->property("id").toString();
 
-     MakeConditions mc_ruku("fuliao_ruku");
+     MakeConditions mc_ruku("chengpin_ruku");
      mc_ruku.AddEqual("ruku_id",ruku_id);
-     MakeConditions mc_chuku("fuliao_chuku");
+     MakeConditions mc_chuku("chengpin_chuku");
      mc_chuku.AddEqual("id",id);
 
      switch( QMessageBox::warning(NULL, SS("警告"),SS("确定要删除该入出库单吗"),
@@ -305,10 +310,10 @@ void findfuliao::TiaoZhuangSlot_2(){
      }
  }
 
-#include "chukuedit.h"
+#include "chengpinchukuedit.h"
 
- void findfuliao::EditChuKu(){
-     ChuKuEdit wnd;
+ void findchengpin::EditChuKu(){
+     ChengPinChuKuEdit wnd;
      QPushButton *btn = (QPushButton *)sender();
      int id = btn->property("id").toInt();
      if( !wnd.LoadData(id)){

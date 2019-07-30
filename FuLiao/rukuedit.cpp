@@ -112,7 +112,7 @@ bool RuKuEdit::LoadData(QString Ruku_id){
             QString objectName = "dateEdit_" + *itset;
             QDateEdit *object = this->findChild<QDateEdit *>(objectName);
             if( object != nullptr){
-                object->setDate(QDate::fromString(data.value(*itset)));
+                object->setDate(QDate::fromString(data.value(*itset),"yyyy-MM-dd"));
                 continue;
             }
         }

@@ -1,20 +1,19 @@
-#include "chukuedit.h"
-#include "ui_chukuedit.h"
+#include "chengpinchukuedit.h"
+#include "ui_chengpinchukuedit.h"
 
-ChuKuEdit::ChuKuEdit(QWidget *parent) :
+ChengPinChuKuEdit::ChengPinChuKuEdit(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChuKuEdit)
+    ui(new Ui::ChengPinChuKuEdit)
 {
     ui->setupUi(this);
 }
 
-ChuKuEdit::~ChuKuEdit()
+ChengPinChuKuEdit::~ChengPinChuKuEdit()
 {
     delete ui;
 }
 
-
-bool ChuKuEdit::ChukuSlotValider(){
+bool ChengPinChuKuEdit::ChukuSlotValider(){
     QString RuKuId = ui->LineEdit_ruku_id_2->text().trimmed();
 
     int shuliangRead =ui->LineEdit_shuliang_2->text().trimmed().toInt();
@@ -35,10 +34,10 @@ bool ChuKuEdit::ChukuSlotValider(){
 }
 #include "MysqlTableConfig/MysqlTableConfig.h"
 
-void ChuKuEdit::FuLiaoChukuSlot(){
+void ChengPinChuKuEdit::ChengPinChukuSlot(){
     if( !ChukuSlotValider()) return ;
     MysqlTableConfig* m_TableConfig = MysqlTableConfig::getInstance();
-    QSet<QString> columns = m_TableConfig->get_table_columns("fuliao_chuku");
+    QSet<QString> columns = m_TableConfig->get_table_columns("chengpin_chuku");
     QMap<QString,QString> ChukuData;
     QSet<QString>::const_iterator itset;
     for (itset = columns.constBegin(); itset != columns.constEnd(); ++itset) {
@@ -61,18 +60,15 @@ void ChuKuEdit::FuLiaoChukuSlot(){
 
     }
 
-
-
-
     QMap<QString,QString> RukuUpdateData={
         {"version",QString::number(version_ruku)},
         {"jieyu_shuliang",QString::number(jieyu_shuliang)},
     };
 
-    MakeConditions c_ruku("fuliao_ruku");
+    MakeConditions c_ruku("chengpin_ruku");
     c_ruku.AddEqual("ruku_id",ui->LineEdit_ruku_id_2->text().trimmed()).AddEqual("version",QString::number(version_ruku));
 
-    MakeConditions c_chuku("fuliao_chuku");
+    MakeConditions c_chuku("chengpin_chuku");
     c_chuku.AddEqual("id",QString::number(id)).AddEqual("version",QString::number(version_chuku));
     ChukuData.insert("version",QString::number(version_chuku));
 
@@ -90,15 +86,15 @@ void ChuKuEdit::FuLiaoChukuSlot(){
 
 }
 
-bool ChuKuEdit::LoadData(int Id){
+bool ChengPinChuKuEdit::LoadData(int Id){
     id = Id;
-    MakeConditions cd("fuliao_chuku");
+    MakeConditions cd("chengpin_chuku");
     cd.AddEqual("id",QString::number(Id));
     QMap<QString,QString> data_chuku;
     if( !m_MysqlOperate->Get(cd,data_chuku) ) return false;
 
     MysqlTableConfig* m_TableConfig = MysqlTableConfig::getInstance();
-    QSet<QString> columns = m_TableConfig->get_table_columns("fuliao_chuku");
+    QSet<QString> columns = m_TableConfig->get_table_columns("chengpin_chuku");
 
     QSet<QString>::const_iterator itset;
     for (itset = columns.constBegin(); itset != columns.constEnd(); ++itset) {
@@ -119,7 +115,7 @@ bool ChuKuEdit::LoadData(int Id){
             }
         }
     }
-    MakeConditions cd_ruku("fuliao_ruku");
+    MakeConditions cd_ruku("chengpin_ruku");
     cd_ruku.AddEqual("ruku_id",data_chuku.value("ruku_id"));
     QMap<QString,QString> data_ruku;
     if( !m_MysqlOperate->Get(cd_ruku,data_ruku) ) return false;

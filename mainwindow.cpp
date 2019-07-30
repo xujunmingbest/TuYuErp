@@ -12,11 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
     {//系统管理
         QMenu* Q =  ui->menu;
         {
-            QAction* action = Q->addAction(SS("添加工厂合同"));
+            QAction* action = Q->addAction(SS("添加面料合同"));
             connect(action, SIGNAL(triggered()), this, SLOT(ShowAddFactoryContractSlot()));
         }
         {
-            QAction* action = Q->addAction(SS("查看工厂合同汇总"));
+            QAction* action = Q->addAction(SS("查看面料合同汇总"));
             connect(action, SIGNAL(triggered()), this, SLOT(ShowFindFactoryContractSlot()));
         }
     }
@@ -44,8 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
             connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinChuRuKuSlot()));
         }
         {
-            QAction* action = Q->addAction(SS("成品结余统计"));
-            connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinJieYuSlot()));
+            QAction* action = Q->addAction(SS("成品明细"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinMingXiSlot()));
         }
     }
 
@@ -77,6 +77,7 @@ void MainWindow::ShowAddFactoryContractSlot(){
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
         AddFactoryContract *c1 = new AddFactoryContract;
+        c1->SetMode(e_mode::ADD);
         mdiArea->addSubWindow(c1);
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);
@@ -98,18 +99,21 @@ void MainWindow::ShowFindFactoryContractSlot(){
 }
 
 #include "FactoryContract/lookfactorycontract.h"
-void MainWindow::ShowLookFactoryContract(QString Contract_id){
-    QString Title = SS("工厂合同明细");
+void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
+    QString Title = SS("添加工厂合同");
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
-        LookFactoryContract *c1 = new LookFactoryContract;
+        AddFactoryContract *c1 = new AddFactoryContract;
         c1->LoadData(Contract_id);
+        c1->SetMode(mode);
         mdiArea->addSubWindow(c1);
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);
     }else{
-        ((LookFactoryContract *)wnd->widget())->LoadData(Contract_id);
+        AddFactoryContract *c1 = ((AddFactoryContract *)wnd->widget());
+        c1->LoadData(Contract_id);
+        c1->SetMode(mode);
     }
 }
 #include "Mianliao/miaoliaoruku.h"
@@ -182,8 +186,18 @@ void MainWindow::ShowChengPinChuRuKuSlot(){
         c1->setWindowTitle(Title);
     }
 }
-void MainWindow::ShowChengPinJieYuSlot(){
 
+#include "ChengPin/findchengpin.h"
+void MainWindow::ShowChengPinMingXiSlot(){
+    QString Title = SS("成品明细");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        findchengpin *c1 = new findchengpin;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
 
 }
 

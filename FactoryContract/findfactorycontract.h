@@ -16,15 +16,15 @@ public:
     ~FindFactoryContract();
 
 private:
+    MysqlOperate * m_MysqlOperate;
     Ui::FindFactoryContract *ui;
     QMap<QString,int> ContractTableIndex;
-    int page;
+    void TiaoZhuang(int page);
 private slots:
     void ShaiXuan();
     void ContractDetailSlot();
-    void TiaoZhuang();
-    void leftSlot();
-    void rightSlot();
+    void ContractEditSlot();
+    void ContractDeleteSlot();
     void PageSlot();
 };
 

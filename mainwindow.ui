@@ -35,7 +35,7 @@
      </font>
     </property>
     <property name="title">
-     <string>工厂合同</string>
+     <string>生产采购</string>
     </property>
    </widget>
    <widget class="QMenu" name="menu_cangku">

@@ -40,7 +40,10 @@ SOURCES += main.cpp\
     Mianliao/mianliao_chuku_edit.cpp \
     FuLiao/findfuliao.cpp \
     FuLiao/chukuedit.cpp \
-    FuLiao/rukuedit.cpp
+    FuLiao/rukuedit.cpp \
+    ChengPin/findchengpin.cpp \
+    ChengPin/chengpinrukuedit.cpp \
+    ChengPin/chengpinchukuedit.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -59,7 +62,10 @@ HEADERS  += mainwindow.h \
     Mianliao/mianliao_chuku_edit.h \
     FuLiao/findfuliao.h \
     FuLiao/chukuedit.h \
-    FuLiao/rukuedit.h
+    FuLiao/rukuedit.h \
+    ChengPin/findchengpin.h \
+    ChengPin/chengpinrukuedit.h \
+    ChengPin/chengpinchukuedit.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -74,4 +80,7 @@ FORMS    += mainwindow.ui \
     Mianliao/mianliao_chuku_edit.ui \
     FuLiao/findfuliao.ui \
     FuLiao/chukuedit.ui \
-    FuLiao/rukuedit.ui
+    FuLiao/rukuedit.ui \
+    ChengPin/findchengpin.ui \
+    ChengPin/chengpinrukuedit.ui \
+    ChengPin/chengpinchukuedit.ui
