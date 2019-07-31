@@ -59,7 +59,7 @@
              </font>
             </property>
             <property name="text">
-             <string>甲方</string>
+             <string>需方</string>
             </property>
            </widget>
           </item>
@@ -72,7 +72,7 @@
              </font>
             </property>
             <property name="text">
-             <string>乙方</string>
+             <string>供方</string>
             </property>
            </widget>
           </item>
@@ -210,7 +210,7 @@
            </font>
           </property>
           <property name="text">
-           <string>甲方</string>
+           <string>需方</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -448,7 +448,7 @@
            </font>
           </property>
           <property name="text">
-           <string>乙方</string>
+           <string>供方</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

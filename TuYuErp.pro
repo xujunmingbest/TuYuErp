@@ -43,7 +43,9 @@ SOURCES += main.cpp\
     FuLiao/rukuedit.cpp \
     ChengPin/findchengpin.cpp \
     ChengPin/chengpinrukuedit.cpp \
-    ChengPin/chengpinchukuedit.cpp
+    ChengPin/chengpinchukuedit.cpp \
+    ZhiXiangContract/zhixiangcontract.cpp \
+    ZhiXiangContract/findzhixiangcontract.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -65,7 +67,9 @@ HEADERS  += mainwindow.h \
     FuLiao/rukuedit.h \
     ChengPin/findchengpin.h \
     ChengPin/chengpinrukuedit.h \
-    ChengPin/chengpinchukuedit.h
+    ChengPin/chengpinchukuedit.h \
+    ZhiXiangContract/zhixiangcontract.h \
+    ZhiXiangContract/findzhixiangcontract.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -83,4 +87,6 @@ FORMS    += mainwindow.ui \
     FuLiao/rukuedit.ui \
     ChengPin/findchengpin.ui \
     ChengPin/chengpinrukuedit.ui \
-    ChengPin/chengpinchukuedit.ui
+    ChengPin/chengpinchukuedit.ui \
+    ZhiXiangContract/zhixiangcontract.ui \
+    ZhiXiangContract/findzhixiangcontract.ui

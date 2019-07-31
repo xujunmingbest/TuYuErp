@@ -15,7 +15,7 @@ FindFactoryContract::FindFactoryContract(QWidget *parent) :
     m_tw->setRowCount(0);
     m_tw->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QStringList headers;
-    headers << SS("合同编号") << SS("签订地点") << SS("甲方单位")<< SS("乙方单位")
+    headers << SS("合同编号") << SS("签订地点") << SS("需方")<< SS("供方")
             << SS("查看") << SS("编辑") << SS("删除");
     m_tw->setHorizontalHeaderLabels(headers);
 
@@ -106,6 +106,8 @@ void FindFactoryContract::TiaoZhuang(int page){
     if(contract_id.length() >0 )makeconditions.AddEqual("contract_id",contract_id);
     makeconditions.AddBetween("jia_date",ui->dateEdit_begindate->text(),ui->dateEdit_enddate->text());
     QString  name = ui->lineEdit_name->text().trimmed();
+    QString  yi_name = ui->lineEdit_yi_name->text().trimmed();
+    if(yi_name.length() > 0) makeconditions.AddEqual("yi_name",yi_name);
     MakeConditions product_cd("factory_product");
     if(name.length() >0 ) {
         product_cd.AddEqual("name",name);

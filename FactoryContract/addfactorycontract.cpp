@@ -159,7 +159,7 @@ void AddFactoryContract::AddContract(){
         QMessageBox::about(NULL, SS("错误提示"), SS("面料合同添加失败"));
     }else{
         m_MysqlOperate->Commit();
-        QMessageBox::about(NULL, SS("错误提示"), SS("面料合同添加成功"));
+        QMessageBox::about(NULL, SS("提示"), SS("面料合同添加成功"));
     }
 }
 #include <QMdiArea>
@@ -223,7 +223,7 @@ void AddFactoryContract::EditContract(){
         QMessageBox::about(NULL, SS("错误提示"), SS("面料合同更新失败"));
     }else{
         m_MysqlOperate->Commit();
-        QMessageBox::about(NULL, SS("错误提示"), SS("面料合同更新成功"));
+        QMessageBox::about(NULL, SS("提示"), SS("面料合同更新成功"));
         QMdiArea *mdiArea  = ((QMdiSubWindow*)this->parent())->mdiArea();
         mdiArea->closeActiveSubWindow();
     }
@@ -280,7 +280,8 @@ bool AddFactoryContract::LoadData(QString ContractId){
         }
     }
     version = data_contract.value("version");
-
+    ui->LineEdit_jia_name_2->setText(ui->LineEdit_jia_name->text());
+    ui->LineEdit_yi_name_2->setText(ui->LineEdit_yi_name->text());
 
     QVector<QMap<QString,QString>> data_product;
     if( !m_MysqlOperate->Find(cd_product,data_product) ) return false;
@@ -294,6 +295,11 @@ bool AddFactoryContract::LoadData(QString ContractId){
         for (itmap = ProductTableIndex.constBegin(); itmap != ProductTableIndex.constEnd(); ++itmap) {
             m_tw->setItem(i, itmap.value(),new QTableWidgetItem(rowdata.value(itmap.key())));
         }
+        QPushButton *pBtn = new QPushButton(SS("删除"));
+        pBtn->setProperty("Row",i);
+        connect(pBtn, SIGNAL(clicked()), this, SLOT(DeleteProduct()));
+        // 在QTableWidget中添加控件
+        m_tw->setCellWidget(i,10,pBtn);
     }
     return true;
 }

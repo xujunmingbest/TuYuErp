@@ -10,12 +10,6 @@ namespace Ui {
 class AddFactoryContract;
 }
 
-enum e_mode{
-     ADD = 1,  //添加模式
-     EDIT = 2, //编辑模式
-     LOOK = 3, //查看模式
-};
-
 
 class AddFactoryContract : public QWidget
 {

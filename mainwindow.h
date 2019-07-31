@@ -21,11 +21,23 @@ public:
     QMdiArea *mdiArea;
     QMdiSubWindow *GetSubWindow(QString title);
     void ShowFactoryContract(QString Contract_id,e_mode mode);
+    void ShowZhixiangContract(QString Contract_id,e_mode mode);
+
+
+    void SetWelcome(QString text);
 private:
     Ui::MainWindow *ui;
+    QLabel *welcome_label;
+
 private slots:
+
+    //面料合同
     void ShowAddFactoryContractSlot();
     void ShowFindFactoryContractSlot();
+    //纸箱合同
+    void ShowAddZhiXiangContractSlot();
+    void ShowFindZhiXiangContractSlot();
+
 
     //面料
     void ShowMianLiaoChuRuKuSlot();

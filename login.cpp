@@ -23,9 +23,9 @@ void Login::LoginSlot(){
     QString Name = ui->lineEdit_name->text().trimmed();
     QString password = ui->lineEdit_password->text().trimmed();
     MysqlOperate * MysqlInstance = MysqlOperate::getInstance();
-    QMap<QString,QString> conditions={{"name",Name},{"password",password}};
     QVector<QMap<QString,QString>> data;
     MakeConditions Conditions("user");
+    Conditions.AddEqual("name",Name).AddEqual("password",password);
     MysqlInstance->Find(Conditions,data);
 
 

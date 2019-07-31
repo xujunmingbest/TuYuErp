@@ -12,6 +12,14 @@
 #include <QVector>
 #include <QStringList>
 #include <QMessageBox>
+
+enum e_mode{
+     ADD = 1,  //添加模式
+     EDIT = 2, //编辑模式
+     LOOK = 3, //查看模式
+};
+
+
 #define PAGESIZE 30
 
 class MakeConditions{

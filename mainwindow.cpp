@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "global.h"
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,6 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     mdiArea = new QMdiArea(this);
     this->setCentralWidget(mdiArea);
+
+    {//添加Statusbar
+
+         welcome_label = new QLabel(SS("您好:"));
+         QToolBar *toolBar = ui->toolBar;
+         toolBar->addWidget(welcome_label);
+         toolBar->setStyleSheet("background-color:rgb(204,204,204);color:red");
+    }
     //注册菜单
     {//系统管理
         QMenu* Q =  ui->menu;
@@ -18,6 +28,14 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             QAction* action = Q->addAction(SS("查看面料合同汇总"));
             connect(action, SIGNAL(triggered()), this, SLOT(ShowFindFactoryContractSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("添加纸箱合同"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowAddZhiXiangContractSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("查看纸箱合同汇总"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowFindZhiXiangContractSlot()));
         }
     }
     {//系统管理
@@ -55,7 +73,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+void MainWindow::SetWelcome(QString text){
+    welcome_label->setText(text);
+}
 
 QMdiSubWindow * MainWindow::GetSubWindow(QString title){
 
@@ -97,6 +117,33 @@ void MainWindow::ShowFindFactoryContractSlot(){
     }
 
 }
+#include "ZhiXiangContract/zhixiangcontract.h"
+void MainWindow::ShowAddZhiXiangContractSlot(){
+    QString Title = SS("添加纸箱合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        ZhiXiangContract *c1 = new ZhiXiangContract;
+        c1->SetMode(e_mode::ADD);
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+}
+
+#include "ZhiXiangContract/findzhixiangcontract.h"
+void MainWindow::ShowFindZhiXiangContractSlot(){
+    QString Title = SS("查看纸箱合同汇总");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        FindZhiXiangContract *c1 = new FindZhiXiangContract;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+}
+
 
 #include "FactoryContract/lookfactorycontract.h"
 void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
@@ -116,6 +163,26 @@ void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
         c1->SetMode(mode);
     }
 }
+
+void MainWindow::ShowZhixiangContract(QString Contract_id,e_mode mode){
+    QString Title = SS("添加纸箱合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        ZhiXiangContract *c1 = new ZhiXiangContract;
+        c1->LoadData(Contract_id);
+        c1->SetMode(mode);
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }else{
+        ZhiXiangContract *c1 = ((ZhiXiangContract *)wnd->widget());
+        c1->LoadData(Contract_id);
+        c1->SetMode(mode);
+    }
+
+}
+
 #include "Mianliao/miaoliaoruku.h"
 
 void MainWindow::ShowMianLiaoChuRuKuSlot(){
