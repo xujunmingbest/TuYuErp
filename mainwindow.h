@@ -31,6 +31,11 @@ private:
 
 private slots:
 
+    //工厂订单
+    void ShowDingdanContractSlot();
+    //void ShowFindFactoryContractSlot();
+
+
     //面料合同
     void ShowAddFactoryContractSlot();
     void ShowFindFactoryContractSlot();
@@ -45,8 +50,6 @@ private slots:
     //辅料
     void ShowFuLiaoChuRuKuSlot();
     void ShowFuLiaoMingXiSlot();
-
-
     //成品
     void ShowChengPinChuRuKuSlot();
     void ShowChengPinMingXiSlot();

@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     ChengPin/chengpinrukuedit.cpp \
     ChengPin/chengpinchukuedit.cpp \
     ZhiXiangContract/zhixiangcontract.cpp \
-    ZhiXiangContract/findzhixiangcontract.cpp
+    ZhiXiangContract/findzhixiangcontract.cpp \
+    DindanContract/dindancontract.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     ChengPin/chengpinrukuedit.h \
     ChengPin/chengpinchukuedit.h \
     ZhiXiangContract/zhixiangcontract.h \
-    ZhiXiangContract/findzhixiangcontract.h
+    ZhiXiangContract/findzhixiangcontract.h \
+    DindanContract/dindancontract.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -89,4 +91,5 @@ FORMS    += mainwindow.ui \
     ChengPin/chengpinrukuedit.ui \
     ChengPin/chengpinchukuedit.ui \
     ZhiXiangContract/zhixiangcontract.ui \
-    ZhiXiangContract/findzhixiangcontract.ui
+    ZhiXiangContract/findzhixiangcontract.ui \
+    DindanContract/dindancontract.ui

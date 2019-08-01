@@ -10,7 +10,8 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(559,393);
     is_login_success = false;
-
+    //QPixmap fitpixmap = QPixmap("D:/TuYuErp/2.png").scaled(500, 500, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    //ui->label->setPixmap(fitpixmap);
 }
 
 Login::~Login()

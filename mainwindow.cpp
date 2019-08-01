@@ -66,6 +66,21 @@ MainWindow::MainWindow(QWidget *parent) :
             connect(action, SIGNAL(triggered()), this, SLOT(ShowChengPinMingXiSlot()));
         }
     }
+    {//订单管理
+        QMenu* Q =  ui->menu_dingdan;
+        {
+            QAction* action = Q->addAction(SS("添加订单合同"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowDingdanContractSlot()));
+        }
+        //{
+        //    QAction* action = Q->addAction(SS("查看订单合同汇总"));
+        //    connect(action, SIGNAL(triggered()), this, SLOT(ShowFindFactoryContractSlot()));
+        //}
+    }
+
+
+
+
 
 }
 
@@ -267,6 +282,18 @@ void MainWindow::ShowChengPinMingXiSlot(){
     }
 
 }
+#include "DindanContract/dindancontract.h"
 
 
+void MainWindow::ShowDingdanContractSlot(){
+    QString Title = SS("订单合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        DindanContract *c1 = new DindanContract;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+}
 

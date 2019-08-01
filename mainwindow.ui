@@ -48,8 +48,14 @@
      <string>仓库管理</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_dingdan">
+    <property name="title">
+     <string>订单管理</string>
+    </property>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_cangku"/>
+   <addaction name="menu_dingdan"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">

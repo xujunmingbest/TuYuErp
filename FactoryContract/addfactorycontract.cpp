@@ -8,6 +8,9 @@ AddFactoryContract::AddFactoryContract(QWidget *parent) :
     ui(new Ui::AddFactoryContract)
 {
     ui->setupUi(this);
+
+
+
     m_MysqlOperate = MysqlOperate::getInstance();
     //tablewidgetÌáÌí¼Ó×Ö¶Î
     QTableWidget *m_tw = ui->table_product;

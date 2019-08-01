@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
          w.SetWelcome(SS("ฤ๚บร:") + CUser::getInstance()->get_name());
          w.showMaximized();
     }else{
-       return -1;
+        return -1;
     }
 
     return a.exec();
