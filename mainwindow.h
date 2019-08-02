@@ -22,7 +22,7 @@ public:
     QMdiSubWindow *GetSubWindow(QString title);
     void ShowFactoryContract(QString Contract_id,e_mode mode);
     void ShowZhixiangContract(QString Contract_id,e_mode mode);
-
+    void ShowDingdanContract(QString Contract_id,e_mode mode);
 
     void SetWelcome(QString text);
 private:
@@ -33,7 +33,7 @@ private slots:
 
     //工厂订单
     void ShowDingdanContractSlot();
-    //void ShowFindFactoryContractSlot();
+    void ShowFindDingdanContractSlot();
 
 
     //面料合同

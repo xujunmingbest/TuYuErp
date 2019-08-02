@@ -72,10 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
             QAction* action = Q->addAction(SS("添加订单合同"));
             connect(action, SIGNAL(triggered()), this, SLOT(ShowDingdanContractSlot()));
         }
-        //{
-        //    QAction* action = Q->addAction(SS("查看订单合同汇总"));
-        //    connect(action, SIGNAL(triggered()), this, SLOT(ShowFindFactoryContractSlot()));
-        //}
+        {
+            QAction* action = Q->addAction(SS("查看订单合同汇总"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowFindDingdanContractSlot()));
+        }
     }
 
 
@@ -132,6 +132,20 @@ void MainWindow::ShowFindFactoryContractSlot(){
     }
 
 }
+#include "DindanContract/finddingdancontract.h"
+ void MainWindow::ShowFindDingdanContractSlot(){
+     QString Title = SS("查看订单合同汇总");
+     QMdiSubWindow *wnd =GetSubWindow(Title);
+     if( wnd == Q_NULLPTR){
+         //mdiarea添加窗体
+         FindDingdanContract *c1 = new FindDingdanContract;
+         mdiArea->addSubWindow(c1);
+         c1->setWindowState(Qt::WindowMaximized);
+         c1->setWindowTitle(Title);
+     }
+
+ }
+
 #include "ZhiXiangContract/zhixiangcontract.h"
 void MainWindow::ShowAddZhiXiangContractSlot(){
     QString Title = SS("添加纸箱合同");
@@ -167,14 +181,21 @@ void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
         AddFactoryContract *c1 = new AddFactoryContract;
-        c1->LoadData(Contract_id);
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              delete c1;
+              return ;
+        }
         c1->SetMode(mode);
         mdiArea->addSubWindow(c1);
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);
     }else{
         AddFactoryContract *c1 = ((AddFactoryContract *)wnd->widget());
-        c1->LoadData(Contract_id);
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              return ;
+        }
         c1->SetMode(mode);
     }
 }
@@ -185,18 +206,54 @@ void MainWindow::ShowZhixiangContract(QString Contract_id,e_mode mode){
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
         ZhiXiangContract *c1 = new ZhiXiangContract;
-        c1->LoadData(Contract_id);
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              delete c1;
+              return ;
+        }
         c1->SetMode(mode);
         mdiArea->addSubWindow(c1);
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);
     }else{
         ZhiXiangContract *c1 = ((ZhiXiangContract *)wnd->widget());
-        c1->LoadData(Contract_id);
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              return ;
+        }
         c1->SetMode(mode);
     }
 
 }
+#include "DindanContract/dindancontract.h"
+
+void MainWindow::ShowDingdanContract(QString Contract_id,e_mode mode){
+    QString Title = SS("添加订单合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        DindanContract *c1 = new DindanContract;
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              delete c1;
+              return ;
+        }
+        c1->SetMode(mode);
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }else{
+        DindanContract *c1 = ((DindanContract *)wnd->widget());
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              return ;
+        }
+        c1->SetMode(mode);
+    }
+
+
+}
+
 
 #include "Mianliao/miaoliaoruku.h"
 
@@ -286,11 +343,12 @@ void MainWindow::ShowChengPinMingXiSlot(){
 
 
 void MainWindow::ShowDingdanContractSlot(){
-    QString Title = SS("订单合同");
+    QString Title = SS("添加订单合同");
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
         DindanContract *c1 = new DindanContract;
+        c1->SetMode(e_mode::ADD);
         mdiArea->addSubWindow(c1);
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);

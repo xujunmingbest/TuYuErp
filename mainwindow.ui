@@ -49,6 +49,11 @@
     </property>
    </widget>
    <widget class="QMenu" name="menu_dingdan">
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
     <property name="title">
      <string>订单管理</string>
     </property>

@@ -161,7 +161,7 @@ void ZhiXiangContract::AddContract(){
 #include <QMdiArea>
 #include <QMdiSubWindow>
 void ZhiXiangContract::EditContract(){
-
+    m_MysqlOperate->Transaction();
     MysqlTableConfig * m_TableConfig  = MysqlTableConfig::getInstance();
     QSet<QString> columns = m_TableConfig->get_table_columns("zhixiang_contract");
     QMap<QString,QString> Contractdata;
@@ -190,7 +190,6 @@ void ZhiXiangContract::EditContract(){
     QTableWidget *m_tw = ui->table_product;
     int row = m_tw->rowCount();
 
-    m_MysqlOperate->Transaction();
     //删除全部产品
     QString contract_id = ui->LineEdit_contract_id->text().trimmed();
     bool success = true;

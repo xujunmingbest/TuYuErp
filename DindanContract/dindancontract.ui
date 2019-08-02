@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1185</width>
+    <width>1304</width>
     <height>2691</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1165</width>
+        <width>1284</width>
         <height>2671</height>
        </rect>
       </property>
@@ -85,7 +85,7 @@
          <x>510</x>
          <y>120</y>
          <width>391</width>
-         <height>241</height>
+         <height>211</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
@@ -195,7 +195,7 @@
          <x>30</x>
          <y>120</y>
          <width>431</width>
-         <height>241</height>
+         <height>211</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout">
@@ -316,15 +316,23 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="table_1">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>390</y>
-         <width>1111</width>
+         <y>340</y>
+         <width>1231</width>
          <height>311</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>120</number>
+       </attribute>
       </widget>
       <widget class="QLineEdit" name="LineEdit_comment_1">
        <property name="geometry">
@@ -477,32 +485,43 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="LineEdit_mian_zhidan_date">
+         <widget class="QDateEdit" name="dateEdit_mian_zhidan_date">
           <property name="font">
            <font>
             <family>Agency FB</family>
-            <pointsize>14</pointsize>
+            <pointsize>11</pointsize>
            </font>
+          </property>
+          <property name="displayFormat">
+           <string>yyyy-MM-dd</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tableWidget_2">
+      <widget class="QTableWidget" name="table_2">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>1080</y>
-         <width>1111</width>
+         <x>20</x>
+         <y>980</y>
+         <width>1241</width>
          <height>351</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>40</number>
+       </attribute>
       </widget>
       <widget class="QLabel" name="label_6">
        <property name="geometry">
         <rect>
          <x>490</x>
-         <y>1500</y>
+         <y>1460</y>
          <width>171</width>
          <height>21</height>
         </rect>
@@ -521,7 +540,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>1470</y>
+         <y>1420</y>
          <width>1161</width>
          <height>16</height>
         </rect>
@@ -537,7 +556,7 @@
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>1550</y>
+         <y>1500</y>
          <width>1111</width>
          <height>721</height>
         </rect>
@@ -798,21 +817,29 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tableWidget_gongyidan">
+      <widget class="QTableWidget" name="table_3">
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>2290</y>
+         <y>2240</y>
          <width>1111</width>
          <height>321</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>120</number>
+       </attribute>
       </widget>
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
          <x>530</x>
-         <y>2640</y>
+         <y>2620</y>
          <width>121</width>
          <height>31</height>
         </rect>
@@ -821,11 +848,121 @@
         <string>添加合同</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>660</y>
+         <width>151</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>添加一行</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>1340</y>
+         <width>151</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>添加一行</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>2570</y>
+         <width>151</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>添加一行</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>DindanContract</receiver>
+   <slot>AddLine_1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>686</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>707</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DindanContract</receiver>
+   <slot>ButtonSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>2659</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>612</x>
+     <y>2684</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>DindanContract</receiver>
+   <slot>AddLine_2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>1356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>1405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>DindanContract</receiver>
+   <slot>AddLine_3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>2596</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-2</x>
+     <y>2590</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>AddLine_1()</slot>
+  <slot>ButtonSlot()</slot>
+  <slot>AddLine_2()</slot>
+  <slot>AddLine_3()</slot>
+ </slots>
 </ui>

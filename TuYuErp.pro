@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -46,7 +46,9 @@ SOURCES += main.cpp\
     ChengPin/chengpinchukuedit.cpp \
     ZhiXiangContract/zhixiangcontract.cpp \
     ZhiXiangContract/findzhixiangcontract.cpp \
-    DindanContract/dindancontract.cpp
+    DindanContract/dindancontract.cpp \
+    picture_client/qtclient.cpp \
+    DindanContract/finddingdancontract.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -71,7 +73,10 @@ HEADERS  += mainwindow.h \
     ChengPin/chengpinchukuedit.h \
     ZhiXiangContract/zhixiangcontract.h \
     ZhiXiangContract/findzhixiangcontract.h \
-    DindanContract/dindancontract.h
+    DindanContract/dindancontract.h \
+    picture_client/qtclient.h \
+    picture_client/msg_def.h \
+    DindanContract/finddingdancontract.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -92,4 +97,5 @@ FORMS    += mainwindow.ui \
     ChengPin/chengpinchukuedit.ui \
     ZhiXiangContract/zhixiangcontract.ui \
     ZhiXiangContract/findzhixiangcontract.ui \
-    DindanContract/dindancontract.ui
+    DindanContract/dindancontract.ui \
+    DindanContract/finddingdancontract.ui
