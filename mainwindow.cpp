@@ -77,6 +77,17 @@ MainWindow::MainWindow(QWidget *parent) :
             connect(action, SIGNAL(triggered()), this, SLOT(ShowFindDingdanContractSlot()));
         }
     }
+    {//订单管理
+        QMenu* Q =  ui->menu_yewu;
+        {
+            QAction* action = Q->addAction(SS("添加客户合同"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowKeHuContractSlot()));
+        }
+        {
+            QAction* action = Q->addAction(SS("查看客户合同汇总"));
+            connect(action, SIGNAL(triggered()), this, SLOT(ShowFindKeHuContractSlot()));
+        }
+    }
 
 
 
@@ -353,5 +364,22 @@ void MainWindow::ShowDingdanContractSlot(){
         c1->setWindowState(Qt::WindowMaximized);
         c1->setWindowTitle(Title);
     }
+}
+
+
+#include "YeWuManage/kehucontract.h"
+//显示客户合同
+void MainWindow::ShowKeHuContractSlot(){
+    QString Title = SS("客户合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        KeHuContract *c1 = new KeHuContract;
+        c1->SetMode(e_mode::ADD);
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+
 }
 

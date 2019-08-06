@@ -58,9 +58,20 @@
      <string>订单管理</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_yewu">
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>业务管理</string>
+    </property>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_cangku"/>
    <addaction name="menu_dingdan"/>
+   <addaction name="menu_yewu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">

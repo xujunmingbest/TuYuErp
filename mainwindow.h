@@ -53,6 +53,10 @@ private slots:
     //成品
     void ShowChengPinChuRuKuSlot();
     void ShowChengPinMingXiSlot();
+
+    //显示客户合同
+    void ShowKeHuContractSlot();
+
 };
 
 #endif // MAINWINDOW_H

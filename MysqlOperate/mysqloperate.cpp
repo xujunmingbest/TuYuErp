@@ -91,6 +91,7 @@ bool MysqlOperate::MysqlOpen(){
 
         if ( defaultDB.open() ) {
             defaultDB.exec("SET NAMES 'gbk'");
+            defaultDB.setConnectOptions("MYSQL_OPT_RECONNECT=1;");
             return true;
         }else{
               QMessageBox::about(NULL, QString::fromLocal8Bit("错误提示"), defaultDB.lastError().databaseText());
@@ -100,6 +101,7 @@ bool MysqlOperate::MysqlOpen(){
 }
 
 bool MysqlOperate::Insert(QString tableName,QMap<QString,QString> &data){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     if( !MysqlTableConfig::getInstance()->is_legal_table(tableName)){
         QMessageBox::about(NULL, SS("错误提示"), SS("该表没有配置文件:")+tableName);
         return false;
@@ -133,6 +135,7 @@ bool MysqlOperate::Insert(QString tableName,QMap<QString,QString> &data){
 }
 
 int MysqlOperate::Count(MakeConditions &Conditions){
+    if(!defaultDB.isOpen() ) MysqlOpen();
    QString sq1 = "select count(*) from " + Conditions.m_TableName + Conditions.Get();
    qDebug() << sq1;
    QSqlQuery query(sq1);
@@ -141,11 +144,15 @@ int MysqlOperate::Count(MakeConditions &Conditions){
            return query.value(0).toInt();
        }
    }
+   if( query.lastError().nativeErrorCode() == "2006"){
+       MysqlOpen();
+   }
    QMessageBox::about(NULL, SS("提示"), SS("数据count失败")+ Conditions.m_TableName);
    return -1;
 }
 
 bool MysqlOperate::Find(MakeConditions &Conditions,QVector<QMap<QString,QString>> &data){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     data.clear();
     QString sq1 = "select ";
     QSet<QString>::const_iterator itset;
@@ -169,10 +176,15 @@ bool MysqlOperate::Find(MakeConditions &Conditions,QVector<QMap<QString,QString>
         qDebug() << data;
         return true;
     }
+    if( query.lastError().nativeErrorCode() == "2006"){
+        MysqlOpen();
+    }
     return false;
 }
 
+
 bool MysqlOperate::Get(MakeConditions &Conditions,QMap<QString,QString> &data){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     data.clear();
     QString sq1 = "select ";
     QSet<QString>::const_iterator itset;
@@ -194,12 +206,16 @@ bool MysqlOperate::Get(MakeConditions &Conditions,QMap<QString,QString> &data){
             return true;
         }
     }
+    if( query.lastError().nativeErrorCode() == "2006"){
+        MysqlOpen();
+    }
     return false;
 
 }
 
 
 qlonglong MysqlOperate::Sum(QString columnName,MakeConditions &Conditions){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     QString sq = "select sum(" + columnName + ") from ";
     sq += Conditions.m_TableName + Conditions.Get();
     qDebug() << sq;
@@ -216,6 +232,7 @@ qlonglong MysqlOperate::Sum(QString columnName,MakeConditions &Conditions){
 
 
 bool MysqlOperate::Delete(MakeConditions &Conditions){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     QString sq = "delete from ";
     sq += Conditions.m_TableName + Conditions;
     QSqlQuery query;
@@ -225,12 +242,16 @@ bool MysqlOperate::Delete(MakeConditions &Conditions){
         return true;
     }else{
         QMessageBox::about(NULL, SS("错误提示"), query.lastError().databaseText());
+        if( query.lastError().nativeErrorCode() == "2006"){
+            MysqlOpen();
+        }
         return false;
     }
 }
 
 
 bool MysqlOperate::Update(MakeConditions &Conditions,QMap<QString,QString> &data){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     if( data.count("version") == 0) {
         QMessageBox::about(NULL, SS("错误提示"), SS("更新没有version字段,不安全:")+Conditions.m_TableName);
         return false;
@@ -258,23 +279,41 @@ bool MysqlOperate::Update(MakeConditions &Conditions,QMap<QString,QString> &data
         return true;
     }else{
         QMessageBox::about(NULL, SS("错误提示"), query.lastError().databaseText());
+        if( query.lastError().nativeErrorCode() == "2006"){
+            MysqlOpen();
+        }
         return false;
     }
    return true;
 }
 
 void MysqlOperate::Transaction(){
+    if(!defaultDB.isOpen() ) MysqlOpen();
    QSqlQuery query ;
    query.exec("START TRANSACTION");//
-
+   if( query.lastError().nativeErrorCode() == "2006"){
+       MysqlOpen();
+       query.exec("START TRANSACTION");
+   }
 }
 void MysqlOperate::Commit(){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     QSqlQuery query ;
     query.exec("COMMIT");//
+    if( query.lastError().nativeErrorCode() == "2006"){
+        MysqlOpen();
+        query.exec("COMMIT");
+    }
 }
 
 void MysqlOperate::Rollback(){
+    if(!defaultDB.isOpen() ) MysqlOpen();
     QSqlQuery query ;
-    query.exec("ROLLBACK");//
+    query.exec("ROLLBACK");
+    if( query.lastError().nativeErrorCode() == "2006"){
+        MysqlOpen();
+        query.exec("ROLLBACK");
+    }
 
 }
+

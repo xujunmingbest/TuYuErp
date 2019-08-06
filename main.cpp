@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     MysqlOperate::getInstance();
 
+
     //w.showMaximized();
     Login lo;
     lo.exec();

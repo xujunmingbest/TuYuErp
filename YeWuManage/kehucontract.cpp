@@ -1,40 +1,43 @@
-#include "zhixiangcontract.h"
-#include "ui_zhixiangcontract.h"
+#include "kehucontract.h"
+#include "ui_kehucontract.h"
 
-ZhiXiangContract::ZhiXiangContract(QWidget *parent) :
+KeHuContract::KeHuContract(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ZhiXiangContract)
+    ui(new Ui::KeHuContract)
 {
     ui->setupUi(this);
 
     m_MysqlOperate = MysqlOperate::getInstance();
     //tablewidget提添加字段
     QTableWidget *m_tw = ui->table_product;
-    m_tw->setColumnCount(8);
+    m_tw->setColumnCount(9);
     m_tw->setRowCount(0);
     QStringList headers;
-    headers << SS("产品名称") << SS("颜色") << SS("规格")<< SS("数量")
-            <<SS("单位") <<  SS("单价") <<SS("金额") << SS("删除");
+    headers << SS("产品名称") << SS("出口货号") << SS("规格尺寸")<< SS("图片")
+            << SS("数量") <<  SS("单位") <<SS("单价") << SS("金额")
+            << SS("删除");
     m_tw->setHorizontalHeaderLabels(headers);
 
     ProductTableIndex.insert("name",0);
-    ProductTableIndex.insert("color",1);
-    ProductTableIndex.insert("spec",2);
-    ProductTableIndex.insert("shuliang",3);
-    ProductTableIndex.insert("danwei",4);
-    ProductTableIndex.insert("danjia",5);
-    ProductTableIndex.insert("jine",6);
+    ProductTableIndex.insert("chukouhuohao",1);
+    ProductTableIndex.insert("spac",2);
+    ProductTableIndex.insert("imageurl",3);
+    ProductTableIndex.insert("shuliang",4);
+    ProductTableIndex.insert("danwei",5);
+    ProductTableIndex.insert("danjia",6);
+    ProductTableIndex.insert("jine",7);
 
     m_tw->horizontalHeader()->setStyleSheet("QHeaderView::section{background:yellow;}");
 
 }
 
-ZhiXiangContract::~ZhiXiangContract()
+KeHuContract::~KeHuContract()
 {
     delete ui;
 }
 
-void ZhiXiangContract::SetMode(e_mode mode){
+
+void KeHuContract::SetMode(e_mode mode){
     m_mode = mode;
     switch(m_mode){
      case e_mode::ADD:
@@ -56,16 +59,16 @@ void ZhiXiangContract::SetMode(e_mode mode){
 
 
 
-void ZhiXiangContract::DeleteProduct(){
+void KeHuContract::DeleteProduct(){
     QTableWidget *m_tw = ui->table_product;
     QPushButton *btn = (QPushButton *)sender();
     m_tw->removeRow(btn->property("Row").toInt());
     for(int i=0;i<m_tw->rowCount();i++){
-        m_tw->cellWidget(i,7)->setProperty("Row",i);
+        m_tw->cellWidget(i,8)->setProperty("Row",i);
     }
 }
 
-void ZhiXiangContract::ButtonSlot(){
+void KeHuContract::ButtonSlot(){
     switch(m_mode){
     case e_mode::ADD:
         AddContract();
@@ -76,19 +79,17 @@ void ZhiXiangContract::ButtonSlot(){
     default :
         break;
     }
-
 }
-
+#include "global.h"
 
 #include "MysqlTableConfig/MysqlTableConfig.h"
-void ZhiXiangContract::AddContract(){
+void KeHuContract::AddContract(){
     if( ui->LineEdit_contract_id->text().trimmed().length() == 0) {
         QMessageBox::about(NULL, SS("错误提示"), SS("合同编号不能为空"));
         return ;
     }
     MysqlTableConfig * m_TableConfig  = MysqlTableConfig::getInstance();
-    MysqlOperate * m_MysqlOperate = MysqlOperate::getInstance();
-    QSet<QString> columns = m_TableConfig->get_table_columns("zhixiang_contract");
+    QSet<QString> columns = m_TableConfig->get_table_columns("kehu_contract");
     QMap<QString,QString> Contractdata;
     QSet<QString>::const_iterator itset;
     for (itset = columns.constBegin(); itset != columns.constEnd(); ++itset) {
@@ -115,18 +116,33 @@ void ZhiXiangContract::AddContract(){
     int row = m_tw->rowCount();
     bool Success = true;
     m_MysqlOperate->Transaction();
-    if( !m_MysqlOperate->Insert("zhixiang_contract",Contractdata)) Success = false;
+    if( !m_MysqlOperate->Insert("kehu_contract",Contractdata)) Success = false;
 
     for(int i=0;i<row;i++){
         QMap<QString,QString> mapdata;
         QMap<QString,int>::const_iterator itmap;
         QString name = m_tw->item(i,0)->text().trimmed();
         if(name.length() == 0 ) continue;
+
         mapdata.insert("contract_id",ui->LineEdit_contract_id->text().trimmed());
         for (itmap = ProductTableIndex.constBegin(); itmap != ProductTableIndex.constEnd(); ++itmap) {
+            if(itmap.key() == "imageurl"){
+                ClickQlabel *label =  (ClickQlabel *)m_tw->cellWidget(i,3);
+                QString UUid  =label->property("imageurl").toString();
+                mapdata.insert(itmap.key(),UUid);
+                continue;
+            }else if(itmap.key() == "shuliang"){
+                QLineEdit *LineEdit =  (QLineEdit *)m_tw->cellWidget(i,4);
+                mapdata.insert(itmap.key(),LineEdit->text());
+                continue;
+            }else if(itmap.key() == "jine"){
+                QLineEdit *LineEdit =  (QLineEdit *)m_tw->cellWidget(i,7);
+                mapdata.insert(itmap.key(),LineEdit->text());
+                continue;
+            }
             mapdata.insert(itmap.key(),m_tw->item(i,itmap.value())->text().trimmed());
         }
-        if( !m_MysqlOperate->Insert("zhixiang_product",mapdata) ) Success = false;
+        if( !m_MysqlOperate->Insert("kehu_product",mapdata) ) Success = false;
     }
 
     if( Success == false){
@@ -139,7 +155,7 @@ void ZhiXiangContract::AddContract(){
 }
 #include <QMdiArea>
 #include <QMdiSubWindow>
-void ZhiXiangContract::EditContract(){
+void KeHuContract::EditContract(){
     m_MysqlOperate->Transaction();
     MysqlTableConfig * m_TableConfig  = MysqlTableConfig::getInstance();
     QSet<QString> columns = m_TableConfig->get_table_columns("zhixiang_contract");
@@ -204,8 +220,8 @@ void ZhiXiangContract::EditContract(){
 
 }
 
-
-void ZhiXiangContract::AddLine(){
+#include "global.h"
+void KeHuContract::AddLine(){
     QTableWidget *m_tw = ui->table_product;
     int rowCount = m_tw->rowCount();
     m_tw->setRowCount(rowCount+1);
@@ -214,14 +230,72 @@ void ZhiXiangContract::AddLine(){
     pBtn->setProperty("Row",rowCount);
     connect(pBtn, SIGNAL(clicked()), this, SLOT(DeleteProduct()));
     // 在QTableWidget中添加控件
-    m_tw->setCellWidget(rowCount,7,pBtn);
+    m_tw->setCellWidget(rowCount,8,pBtn);
     for(int i=0;i<8;i++){
+        if( i == 3){//图片
+            ClickQlabel *  label = new ClickQlabel(SS("点击导入图片"));
+            connect(label, SIGNAL(clicked()), this, SLOT(LoadImage()));
+            m_tw->setCellWidget(rowCount,i,label);
+            m_tw->setColumnWidth(i,150);
+            continue;
+        }
+        if( i == 4){//数量
+            QLineEdit *LineEdit = new QLineEdit("");
+            m_tw->setCellWidget(rowCount,i,LineEdit);
+            QIntValidator *Validator =new QIntValidator(0, 10000000);
+            LineEdit->setValidator(Validator);
+            continue;
+        }
+        if( i == 7){//数量
+            QLineEdit *LineEdit = new QLineEdit("");
+            m_tw->setCellWidget(rowCount,i,LineEdit);
+            QDoubleValidator *Validator =new QDoubleValidator(0, 10000000,3);
+            LineEdit->setValidator(Validator);
+            continue;
+        }
        m_tw->setItem(rowCount,i,new QTableWidgetItem(""));
     }
 }
 
+#include <QFileDialog>
+#include "picture_client/qtclient.h"
 
-bool ZhiXiangContract::LoadData(QString ContractId){
+void KeHuContract::LoadImage(){
+
+     if( m_mode == e_mode::LOOK) return;
+     ClickQlabel *label = (ClickQlabel *)sender();
+
+     QStringList    fileNameList;
+     QString fileName0;
+     QFileDialog* fd = new QFileDialog(this);//创建对话框
+     fd->resize(240,320);    //设置显示的大小
+     fd->setNameFilter( ("png(*.png);;jpg(*.jpg);;jpeg(*.jpeg)")); //设置文件过滤器
+     fd->setViewMode(QFileDialog::List);  //设置浏览模式,有列表（list） 模式和 详细信息（detail）两种方式
+     if ( fd->exec() == QDialog::Accepted )   //如果成功的执行
+     {
+         fileNameList = fd->selectedFiles();      //返回文件列表的名称
+         QString fileName0 = fileNameList[0];            //取第一个文件名
+         //上传图片
+         QtClient client;
+         client.UploadData(fileName0);
+         if(client.Success){
+             //删除原来的
+             //QString oldUUid  =label->property("imageurl").toString();
+             //if( oldUUid.length() > 0){
+             //       client.DeleteData(oldUUid);
+             //}
+             label->setProperty("imageurl",client.uuid);
+             QPixmap fitpixmap = QPixmap(fileName0).scaled(150, 120, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+             label->setPixmap(fitpixmap);
+         }else{
+             QMessageBox::about(NULL, SS("错误提示"), SS("图片上传失败"));
+
+         }
+     }
+     else fd->close();
+}
+
+bool KeHuContract::LoadData(QString ContractId){
     MakeConditions cd_contract("zhixiang_contract");
     cd_contract.AddEqual("contract_id",ContractId);
     MakeConditions cd_product("zhixiang_product");
@@ -253,8 +327,6 @@ bool ZhiXiangContract::LoadData(QString ContractId){
             }
         }
     }
-    ui->LineEdit_gongfang_2->setText(ui->LineEdit_gongfang->text());
-    ui->LineEdit_xufang_2->setText(ui->LineEdit_xufang->text());
 
     version = data_contract.value("version");
 
@@ -281,4 +353,24 @@ bool ZhiXiangContract::LoadData(QString ContractId){
     return true;
 }
 
+
+
+void KeHuContract::HeJiShuLiang(){
+    QTableWidget *m_tw = ui->table_product;
+    int row = m_tw->rowCount();
+
+    for(int i=0;i<row;i++){
+        QMap<QString,QString> mapdata;
+        QMap<QString,int>::const_iterator itmap;
+        QString name = m_tw->item(i,0)->text().trimmed();
+        if(name.length() == 0 ) continue;
+
+
+    }
+
+}
+void KeHuContract::HeJiJine(){
+
+
+}
 

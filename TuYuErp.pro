@@ -48,7 +48,9 @@ SOURCES += main.cpp\
     ZhiXiangContract/findzhixiangcontract.cpp \
     DindanContract/dindancontract.cpp \
     picture_client/qtclient.cpp \
-    DindanContract/finddingdancontract.cpp
+    DindanContract/finddingdancontract.cpp \
+    YeWuManage/kehucontract.cpp \
+    YeWuManage/findkehucontract.cpp
 
 HEADERS  += mainwindow.h \
     global.h \
@@ -76,7 +78,9 @@ HEADERS  += mainwindow.h \
     DindanContract/dindancontract.h \
     picture_client/qtclient.h \
     picture_client/msg_def.h \
-    DindanContract/finddingdancontract.h
+    DindanContract/finddingdancontract.h \
+    YeWuManage/kehucontract.h \
+    YeWuManage/findkehucontract.h
 
 FORMS    += mainwindow.ui \
     login.ui \
@@ -98,4 +102,6 @@ FORMS    += mainwindow.ui \
     ZhiXiangContract/zhixiangcontract.ui \
     ZhiXiangContract/findzhixiangcontract.ui \
     DindanContract/dindancontract.ui \
-    DindanContract/finddingdancontract.ui
+    DindanContract/finddingdancontract.ui \
+    YeWuManage/kehucontract.ui \
+    YeWuManage/findkehucontract.ui

@@ -51,7 +51,7 @@ private:
 public:
   MysqlOperate();
   static MysqlOperate *getInstance();
-    bool MysqlOpen();  //数据库打开连接
+  bool MysqlOpen();  //数据库打开连接
   void Transaction();
   void Commit();
   void Rollback();
@@ -66,7 +66,6 @@ public:
   qlonglong Sum(QString columnName,MakeConditions &Conditions);
   bool Update(MakeConditions &Conditions,QMap<QString,QString> &data);
   bool Insert(QString tableName,QMap<QString,QString> &data);
-
 };
 
 

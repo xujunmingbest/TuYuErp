@@ -1,20 +1,6 @@
 #include "dindancontract.h"
 #include "ui_dindancontract.h"
 
-ClickQlabel::ClickQlabel(QWidget *parent, Qt::WindowFlags f):
-    QLabel(parent,f)
-{
-}
-ClickQlabel::ClickQlabel(const QString &text, QWidget *parent, Qt::WindowFlags f):
-    QLabel(text,parent,f)
-{
-}
-void ClickQlabel::mouseReleaseEvent(QMouseEvent * ev)
-{
-    Q_UNUSED(ev)
-    emit clicked();
-}
-
 
 DindanContract::DindanContract(QWidget *parent) :
     QWidget(parent),
