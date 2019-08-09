@@ -2,7 +2,7 @@
 #define FINDKEHUCONTRACT_H
 
 #include <QWidget>
-
+#include "MysqlOperate/mysqloperate.h"
 namespace Ui {
 class FindKeHuContract;
 }
@@ -17,6 +17,16 @@ public:
 
 private:
     Ui::FindKeHuContract *ui;
+
+    MysqlOperate* m_MysqlOperate;
+    QMap<QString,int> ContractTableIndex;
+    void TiaoZhuang(int page);
+private slots:
+    void ShaiXuan();
+    void ContractDetailSlot();
+    void ContractEditSlot();
+    void ContractDeleteSlot();
+    void PageSlot();
 };
 
 #endif // FINDKEHUCONTRACT_H

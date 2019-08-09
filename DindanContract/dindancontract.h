@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "MysqlOperate/mysqloperate.h"
 #include "global.h"
+#include "picture_client/msg_def.h"
 namespace Ui {
 class DindanContract;
 }

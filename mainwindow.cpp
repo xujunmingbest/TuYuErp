@@ -115,10 +115,23 @@ QMdiSubWindow * MainWindow::GetSubWindow(QString title){
     }
     return Q_NULLPTR;
 }
+
+void MainWindow::DeleteSubWindow(QString title){
+    foreach (QMdiSubWindow *window, mdiArea->subWindowList())
+    {
+        if ( window->windowTitle() == title)
+        {   //如果已经打开过，则获得焦点
+            mdiArea->removeSubWindow(window);
+        }
+    }
+}
+
+
 #include "FactoryContract/addfactorycontract.h"
 
 void MainWindow::ShowAddFactoryContractSlot(){
     QString Title = SS("添加工厂合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -188,6 +201,7 @@ void MainWindow::ShowFindZhiXiangContractSlot(){
 #include "FactoryContract/lookfactorycontract.h"
 void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
     QString Title = SS("添加工厂合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -213,6 +227,7 @@ void MainWindow::ShowFactoryContract(QString Contract_id,e_mode mode){
 
 void MainWindow::ShowZhixiangContract(QString Contract_id,e_mode mode){
     QString Title = SS("添加纸箱合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -240,6 +255,7 @@ void MainWindow::ShowZhixiangContract(QString Contract_id,e_mode mode){
 
 void MainWindow::ShowDingdanContract(QString Contract_id,e_mode mode){
     QString Title = SS("添加订单合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -262,6 +278,34 @@ void MainWindow::ShowDingdanContract(QString Contract_id,e_mode mode){
         c1->SetMode(mode);
     }
 
+
+}
+
+#include "YeWuManage/kehucontract.h"
+void MainWindow::ShowHeHuContract(QString Contract_id,e_mode mode){
+    QString Title = SS("客户合同");
+    DeleteSubWindow(Title);
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        KeHuContract *c1 = new KeHuContract;
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              delete c1;
+              return ;
+        }
+        c1->SetMode(mode);
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }else{
+        KeHuContract *c1 = ((KeHuContract *)wnd->widget());
+        if( !c1->LoadData(Contract_id) ){
+              QMessageBox::about(NULL, SS("错误提示"), SS("数据加载失败"));
+              return ;
+        }
+        c1->SetMode(mode);
+    }
 
 }
 
@@ -355,6 +399,7 @@ void MainWindow::ShowChengPinMingXiSlot(){
 
 void MainWindow::ShowDingdanContractSlot(){
     QString Title = SS("添加订单合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -371,6 +416,7 @@ void MainWindow::ShowDingdanContractSlot(){
 //显示客户合同
 void MainWindow::ShowKeHuContractSlot(){
     QString Title = SS("客户合同");
+    DeleteSubWindow(Title);
     QMdiSubWindow *wnd =GetSubWindow(Title);
     if( wnd == Q_NULLPTR){
         //mdiarea添加窗体
@@ -383,3 +429,15 @@ void MainWindow::ShowKeHuContractSlot(){
 
 }
 
+#include "YeWuManage/findkehucontract.h"
+void MainWindow::ShowFindKeHuContractSlot(){
+    QString Title = SS("查看客户合同");
+    QMdiSubWindow *wnd =GetSubWindow(Title);
+    if( wnd == Q_NULLPTR){
+        //mdiarea添加窗体
+        FindKeHuContract *c1 = new FindKeHuContract;
+        mdiArea->addSubWindow(c1);
+        c1->setWindowState(Qt::WindowMaximized);
+        c1->setWindowTitle(Title);
+    }
+}

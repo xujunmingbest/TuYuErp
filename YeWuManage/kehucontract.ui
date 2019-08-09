@@ -697,9 +697,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>KeHuContract</receiver>
+   <slot>HeJiJine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>775</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>805</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>AddLine()</slot>
   <slot>ButtonSlot()</slot>
+  <slot>HeJiJine()</slot>
  </slots>
 </ui>

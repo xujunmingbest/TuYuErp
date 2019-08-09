@@ -20,11 +20,14 @@ public:
     ~MainWindow();
     QMdiArea *mdiArea;
     QMdiSubWindow *GetSubWindow(QString title);
+    void DeleteSubWindow(QString title);
     void ShowFactoryContract(QString Contract_id,e_mode mode);
     void ShowZhixiangContract(QString Contract_id,e_mode mode);
     void ShowDingdanContract(QString Contract_id,e_mode mode);
+    void ShowHeHuContract(QString Contract_id,e_mode mode);
 
     void SetWelcome(QString text);
+
 private:
     Ui::MainWindow *ui;
     QLabel *welcome_label;
@@ -43,7 +46,6 @@ private slots:
     void ShowAddZhiXiangContractSlot();
     void ShowFindZhiXiangContractSlot();
 
-
     //面料
     void ShowMianLiaoChuRuKuSlot();
     void ShowMianLiaoMingXiSlot();
@@ -56,7 +58,7 @@ private slots:
 
     //显示客户合同
     void ShowKeHuContractSlot();
-
+    void ShowFindKeHuContractSlot();
 };
 
 #endif // MAINWINDOW_H
